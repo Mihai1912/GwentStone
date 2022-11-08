@@ -1,0 +1,12 @@
+Starting audit...
+[ERROR] F:\POO\tema1\.\src\main\Main.java:9:8: Unused import - fileio.DecksInput. [UnusedImports]
+[ERROR] F:\POO\tema1\.\src\main\Main.java:17:8: Unused import - java.util.ArrayList. [UnusedImports]
+[ERROR] F:\POO\tema1\.\src\main\Main.java:82: Line is longer than 100 characters (found 126). [LineLength]
+[ERROR] F:\POO\tema1\.\src\main\Minion.java:6:9: Variable 'mana' must be private and have accessor methods. [VisibilityModifier]
+[ERROR] F:\POO\tema1\.\src\main\Minion.java:7:9: Variable 'health' must be private and have accessor methods. [VisibilityModifier]
+[ERROR] F:\POO\tema1\.\src\main\Minion.java:8:9: Variable 'attackDamage' must be private and have accessor methods. [VisibilityModifier]
+[ERROR] F:\POO\tema1\.\src\main\Minion.java:9:12: Variable 'description' must be private and have accessor methods. [VisibilityModifier]
+[ERROR] F:\POO\tema1\.\src\main\Minion.java:10:23: Variable 'colors' must be private and have accessor methods. [VisibilityModifier]
+[ERROR] F:\POO\tema1\.\src\main\Minion.java:11:12: Variable 'name' must be private and have accessor methods. [VisibilityModifier]
+Audit done.
+Checkstyle ends with 9 errors.
