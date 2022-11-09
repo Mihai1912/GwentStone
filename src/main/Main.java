@@ -6,8 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import checker.CheckerConstants;
-import fileio.DecksInput;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.ActionsInput;
+import fileio.CardInput;
 import fileio.Input;
+import main.CommandInterpretor.Interpret;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,14 +77,42 @@ public final class Main {
         ArrayNode output = objectMapper.createArrayNode();
 
         //TODO add here the entry point to your implementation
-//        int nrDecks = inputData.getPlayerOneDecks().getDecks().toString();
-        System.out.println(inputData.getPlayerOneDecks().getDecks());
+        int noGame = inputData.getGames().size() - 1;
+        initDecks Decks = new initDecks(inputData);
+        Player Player1 = new Player();
+        Player1.setIdx(1);
+        Player Player2 = new Player();
+        Player2.setIdx(2);
+        if (inputData.getGames().get(noGame).getStartGame().getStartingPlayer() == 1) {
+            Player1.setTurn(true);
+            Player2.setTurn(false);
+        } else {
+            Player1.setTurn(false);
+            Player2.setTurn(true);
+        }
+        CardInput heroPlayer1 = inputData.getGames().get(noGame).getStartGame().getPlayerOneHero();
+        CardInput heroPlayer2 = inputData.getGames().get(noGame).getStartGame().getPlayerTwoHero();
+        Player1.setDeck(Decks.deckPlayer1);
+        Player2.setDeck(Decks.deckPlayer2);
+        Player1.setHero(heroPlayer1);
+        Player2.setHero(heroPlayer2);
+        Player1.drawCard(Player1.getDeck());
+        Player2.drawCard(Player2.getDeck());
 
+        ActionsInput commnd;
+        ArrayList<ActionsInput> actions = new ArrayList<>();
+        actions = inputData.getGames().get(noGame).getActions();
 
-//        System.out.println(inputData.getPlayerOneDecks().getNrCardsInDeck());
-//        DecksInput plm_sau_gogu = objectMapper.readValue(inputData.getPlayerOneDecks().getDecks().get(1), DecksInput.class);
-
-
+        for (int i = 0 ; i < actions.size() ; i++) {
+            commnd = actions.get(i);
+            Interpret cmdint = new Interpret();
+            cmdint.setCmd(commnd);
+            if (commnd.getPlayerIdx() == 1) {
+                cmdint.interpretation(commnd , output , Player1 , objectMapper);
+            } else {
+                cmdint.interpretation(commnd , output , Player2 , objectMapper);
+            }
+        }
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);
