@@ -1,39 +1,42 @@
 package main;
 
 import fileio.CardInput;
+import main.Cards.Card;
+import main.Cards.Environment;
+import main.Cards.Hero;
 
 import java.util.ArrayList;
 
 public class Player {
     private int idx;
     private boolean turn;
-    private ArrayList<CardInput> inHandCard = new ArrayList<>();
-    private CardInput hero;
-    private ArrayList<CardInput> deck = new ArrayList<>();
+    private ArrayList<Card> inHandCard = new ArrayList<>();
+    private Hero hero;
+    private ArrayList<Card> deck = new ArrayList<>();
     private int mana;
 
 
-    public void setDeck(ArrayList<CardInput> deck) {
-        this.deck = deck;
-    }
-
-    public void setInHandCard(ArrayList<CardInput> inHandCard) {
+    public void setInHandCard(ArrayList<Card> inHandCard) {
         this.inHandCard = inHandCard;
     }
 
-    public void setHero(CardInput hero) {
-        this.hero = hero;
+    public void setDeck(ArrayList<Card> deck) {
+        this.deck = deck;
     }
 
-    public ArrayList<CardInput> getDeck() {
-        return deck;
+    public void setHero(Card hero) {
+        this.hero = (Hero) hero;
     }
 
-    public ArrayList<CardInput> getInHandCard() {
+    public ArrayList<Card> getInHandCard() {
         return inHandCard;
     }
 
-    public CardInput getHero() {
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
+
+    public Hero getHero() {
         return hero;
     }
 
@@ -61,7 +64,7 @@ public class Player {
         this.turn = turn;
     }
 
-    void drawCard (ArrayList<CardInput> deck) {
+    void drawCard (ArrayList<Card> deck) {
         inHandCard.add(deck.get(0));
         deck.remove(0);
     }

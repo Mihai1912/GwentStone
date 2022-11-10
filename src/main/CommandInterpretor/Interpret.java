@@ -13,19 +13,15 @@ public class Interpret {
 
     ActionsInput cmd;
 
-    public ArrayNode interpretation(ActionsInput command , ArrayNode output, Player player, ObjectMapper objectMapper){
+    public ArrayNode interpretation(ActionsInput command, ArrayNode output, Player player){
         if (command.getCommand().equals("getPlayerDeck")) {
-            PrintDeck print = new PrintDeck();
-            print.player = player;
             output.addObject().put("command" , command.getCommand())
                     .put("playerIdx" , command.getPlayerIdx())
-                    .set("output" , print.printDeck(objectMapper));
+                    .putPOJO("output" , player.getDeck());
         } else if (command.getCommand().equals("getPlayerHero")) {
-            MakeCardInObj print = new MakeCardInObj();
-            print.card = player.getHero();
             output.addObject().put("command" , command.getCommand())
                     .put("playerIdx" , command.getPlayerIdx())
-                    .set("output" , print.cardToObj(objectMapper));
+                    .putPOJO("output" , player.getHero());
         } else if (command.getCommand().equals("getPlayerTurn")) {
             output.addObject().put("command",command.getCommand()).put("output" , player.getIdx());
         }

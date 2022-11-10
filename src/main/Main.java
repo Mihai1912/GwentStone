@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.ActionsInput;
 import fileio.CardInput;
 import fileio.Input;
+import main.Cards.Minion;
 import main.CommandInterpretor.Interpret;
 
 import java.io.File;
@@ -94,13 +95,15 @@ public final class Main {
         CardInput heroPlayer2 = inputData.getGames().get(noGame).getStartGame().getPlayerTwoHero();
         Player1.setDeck(Decks.deckPlayer1);
         Player2.setDeck(Decks.deckPlayer2);
-        Player1.setHero(heroPlayer1);
-        Player2.setHero(heroPlayer2);
+        CardTypeIdentificator hero1 = new CardTypeIdentificator(heroPlayer1);
+        CardTypeIdentificator hero2 = new CardTypeIdentificator(heroPlayer2);
+        Player1.setHero(hero1.card);
+        Player2.setHero(hero2.card);
         Player1.drawCard(Player1.getDeck());
         Player2.drawCard(Player2.getDeck());
 
         ActionsInput commnd;
-        ArrayList<ActionsInput> actions = new ArrayList<>();
+        ArrayList<ActionsInput> actions;
         actions = inputData.getGames().get(noGame).getActions();
 
         for (int i = 0 ; i < actions.size() ; i++) {
@@ -108,9 +111,9 @@ public final class Main {
             Interpret cmdint = new Interpret();
             cmdint.setCmd(commnd);
             if (commnd.getPlayerIdx() == 1) {
-                cmdint.interpretation(commnd , output , Player1 , objectMapper);
+                cmdint.interpretation(commnd , output , Player1);
             } else {
-                cmdint.interpretation(commnd , output , Player2 , objectMapper);
+                cmdint.interpretation(commnd , output , Player2);
             }
         }
 
