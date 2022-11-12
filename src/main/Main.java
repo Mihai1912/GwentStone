@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.ActionsInput;
 import fileio.CardInput;
 import fileio.Input;
+import main.Actions.NewRound;
+import main.Cards.Card;
 import main.Cards.Minion;
 import main.CommandInterpretor.Interpret;
 
@@ -80,6 +82,7 @@ public final class Main {
         //TODO add here the entry point to your implementation
         int noGame = inputData.getGames().size() - 1;
         initDecks Decks = new initDecks(inputData);
+        ArrayList<ArrayList<Card>> table = new ArrayList<>();
         Player Player1 = new Player();
         Player1.setIdx(1);
         Player Player2 = new Player();
@@ -99,8 +102,13 @@ public final class Main {
         CardTypeIdentificator hero2 = new CardTypeIdentificator(heroPlayer2);
         Player1.setHero(hero1.card);
         Player2.setHero(hero2.card);
-        Player1.drawCard(Player1.getDeck());
-        Player2.drawCard(Player2.getDeck());
+        if (Player1.isTurn()) {
+            NewRound newRound = new NewRound(Player1 , Player2);
+        } else {
+            NewRound newRound = new NewRound(Player2 , Player1);
+        }
+//        Player1.drawCard();
+//        Player2.drawCard();
 
         ActionsInput commnd;
         ArrayList<ActionsInput> actions;
@@ -110,10 +118,13 @@ public final class Main {
             commnd = actions.get(i);
             Interpret cmdint = new Interpret();
             cmdint.setCmd(commnd);
-            if (commnd.getPlayerIdx() == 1) {
-                cmdint.interpretation(commnd , output , Player1);
-            } else {
-                cmdint.interpretation(commnd , output , Player2);
+            if (commnd.getPlayerIdx() == 1 ||
+                    (Player1.isTurn())) {
+                cmdint.interpretation(commnd , output , Player1 , Player2 , table);
+//                System.out.println("caz1");
+            } else if (Player2.isTurn()){
+                cmdint.interpretation(commnd , output , Player2 , Player1 , table);
+//                System.out.println("caz2");
             }
         }
 

@@ -16,13 +16,25 @@ public class CardTypeIdentificator {
         if (name.equals("Sentinel") || name.equals("Berserker") || name.equals("Goliath")
                 || name.equals("Warden") || name.equals("The Ripper") || name.equals("Miraj")
                 || name.equals("The Cursed One") || name.equals("Disciple")) {
-            Minion minion = new Minion(cardInput.getMana() ,
-                    cardInput.getDescription() ,
-                    cardInput.getColors() ,
-                    cardInput.getName() ,
-                    cardInput.getHealth() ,
-                    cardInput.getAttackDamage());
-            card = minion;
+            if (name.equals("Warden") || name.equals("Goliath")) {
+                Minion minion = new Minion(cardInput.getMana() ,
+                        cardInput.getDescription() ,
+                        cardInput.getColors() ,
+                        cardInput.getName() ,
+                        cardInput.getHealth() ,
+                        cardInput.getAttackDamage());
+                minion.setTank(true);
+                card = minion;
+            } else {
+                Minion minion = new Minion(cardInput.getMana() ,
+                        cardInput.getDescription() ,
+                        cardInput.getColors() ,
+                        cardInput.getName() ,
+                        cardInput.getHealth() ,
+                        cardInput.getAttackDamage());
+                minion.setTank(false);
+                card = minion;
+            }
         }
         if (name.equals("Firestorm") || name.equals("Winterfell") || name.equals("Heart Hound")) {
             Environment environment = new Environment(cardInput.getMana() ,

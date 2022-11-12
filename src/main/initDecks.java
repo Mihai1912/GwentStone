@@ -30,6 +30,9 @@ public class initDecks {
             CardTypeIdentificator cardDeck2 = new CardTypeIdentificator(decksPlayer2.get(player2DeckIdx).get(i));
             deckPlayer2.add(cardDeck2.card);
         }
+
+//        System.out.println(inputData.getGames().get(noGame).getStartGame().getShuffleSeed());
+
         shuffle(deckPlayer1 , new Random(inputData.getGames().get(noGame).getStartGame().getShuffleSeed()));
         shuffle(deckPlayer2 , new Random(inputData.getGames().get(noGame).getStartGame().getShuffleSeed()));
     }
