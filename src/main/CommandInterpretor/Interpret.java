@@ -306,7 +306,72 @@ public class Interpret {
                             .put("affectedRow" , command.getAffectedRow())
                             .put("error" , "Chosen card is not of type environment.");
                 }
-//                RemoveDeadCard removeDeadCard = new RemoveDeadCard(table);
+            } else if (command.getCommand().equals("cardUsesAbility")) {
+                Card attacker = new Card();
+                attacker = table.get(command.getCardAttacker().getX()).get(command.getCardAttacker().getY());
+                Card attacked = new Card();
+                attacked = table.get(command.getCardAttacked().getX()).get(command.getCardAttacked().getY());
+                if (!(((Minion)attacker).isFrozen())) {
+                    if (!(((Minion)attacker).isFrozenForRound())) {
+                        if (((Minion)attacker).getName().equals("Disciple")) {
+                            if (actingPlayer.getFrontRow().contains(attacked) ||
+                                    actingPlayer.getBackRow().contains(attacked)) {
+                                attacker.action(actingPlayer , otherPlayer , command);
+                                ((Minion) attacker).setFrozen(true);
+                            } else {
+                                output.addObject().put("command" , command.getCommand())
+                                        .putPOJO("cardAttacker" , command.getCardAttacker())
+                                        .putPOJO("cardAttacked" , command.getCardAttacked())
+                                        .put("error" , "Attacked card does not belong to the current player.");
+                            }
+                        } else {
+                            if (otherPlayer.getFrontRow().contains(attacked) ||
+                                    otherPlayer.getBackRow().contains(attacked)) {
+                                if (((Minion)attacked).isTank()) {
+                                    attacker.action(actingPlayer , otherPlayer , command);
+                                    ((Minion) attacker).setFrozen(true);
+                                } else {
+                                    int x = command.getCardAttacked().getX();
+                                    boolean value1 = false;
+                                    switch (x) {
+                                        case 0:
+                                        case 1:
+                                            value1 = actingPlayer.ifAttackTank(table.get(0), table.get(1));
+                                            break;
+                                        case 2:
+                                        case 3:
+                                            value1 = actingPlayer.ifAttackTank(table.get(2), table.get(3));
+                                            break;
+                                    }
+                                    if (!value1) {
+                                        attacker.action(actingPlayer , otherPlayer , command);
+                                        ((Minion) attacker).setFrozen(true);
+                                    } else {
+                                        output.addObject().put("command", command.getCommand())
+                                                .putPOJO("cardAttacker", command.getCardAttacker())
+                                                .putPOJO("cardAttacked", command.getCardAttacked())
+                                                .put("error", "Attacked card is not of type 'Tank'.");
+                                    }
+                                }
+                            } else {
+                                output.addObject().put("command" , command.getCommand())
+                                        .putPOJO("cardAttacker" , command.getCardAttacker())
+                                        .putPOJO("cardAttacked" , command.getCardAttacked())
+                                        .put("error" , "Attacked card does not belong to the enemy.");
+                            }
+                        }
+                    } else {
+                        output.addObject().put("command" , command.getCommand())
+                                .putPOJO("cardAttacker" , command.getCardAttacker())
+                                .putPOJO("cardAttacked" , command.getCardAttacked())
+                                .put("error" , "Attacker card is frozen.");
+                    }
+                } else {
+                    output.addObject().put("command" , command.getCommand())
+                                    .putPOJO("cardAttacker" , command.getCardAttacker())
+                                    .putPOJO("cardAttacked" , command.getCardAttacked())
+                                    .put("error" , "Attacker card has already attacked this turn.");
+                }
             }
         }
         RemoveDeadCard removeDeadCard = new RemoveDeadCard(table);

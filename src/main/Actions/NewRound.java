@@ -30,30 +30,24 @@ public class NewRound {
             ((Minion)card).setFrozen(false);
         }
         if (actingPlayer.getFrontRow().size()!=0) {
-            Card card = new Card();
-            actingPlayer.getFrontRow().get(0);
-            if (card.getUnfrozenRound() == actingPlayer.getNoRound()) {
-                for (Card cardAux : actingPlayer.getFrontRow()) {
-                    ((Minion)cardAux).setUnfrozenRound(0);
-                    ((Minion)cardAux).setFrozenForRound(false);
+            for (Card cardAux : actingPlayer.getFrontRow()) {
+                if (cardAux.getUnfrozenRound() == actingPlayer.getNoRound()) {
+                    (cardAux).setUnfrozenRound(0);
+                    ((Minion) cardAux).setFrozenForRound(false);
                 }
             }
         }
         if (actingPlayer.getBackRow().size()!=0) {
-            Card card = new Card();
-            actingPlayer.getBackRow().get(0);
-            if (card.getUnfrozenRound() == actingPlayer.getNoRound()) {
-                for (Card cardAux : actingPlayer.getBackRow()) {
+            for (Card cardAux : actingPlayer.getBackRow()) {
+                if (cardAux.getUnfrozenRound() == actingPlayer.getNoRound()) {
                     (cardAux).setUnfrozenRound(0);
-                    ((Minion)cardAux).setFrozenForRound(false);
+                    ((Minion) cardAux).setFrozenForRound(false);
                 }
             }
         }
         if (otherPlayer.getFrontRow().size()!=0) {
-            Card card = new Card();
-            otherPlayer.getFrontRow().get(0);
-            if (card.getUnfrozenRound() == otherPlayer.getNoRound()) {
-                for (Card cardAux : otherPlayer.getFrontRow()) {
+            for (Card cardAux : otherPlayer.getFrontRow()) {
+                if (cardAux.getUnfrozenRound() == otherPlayer.getNoRound()) {
                     ((Minion)cardAux).setUnfrozenRound(0);
                     ((Minion)cardAux).setFrozenForRound(false);
                 }
@@ -61,10 +55,8 @@ public class NewRound {
         }
 
         if (otherPlayer.getBackRow().size()!=0) {
-            Card card = new Card();
-            otherPlayer.getBackRow().get(0);
-            if (card.getUnfrozenRound() == otherPlayer.getNoRound()) {
-                for (Card cardAux : otherPlayer.getBackRow()) {
+            for (Card cardAux : otherPlayer.getBackRow()) {
+                if (cardAux.getUnfrozenRound() == otherPlayer.getNoRound()) {
                     ((Minion)cardAux).setUnfrozenRound(0);
                     ((Minion)cardAux).setFrozenForRound(false);
                 }

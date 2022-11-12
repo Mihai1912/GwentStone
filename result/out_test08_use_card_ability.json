@@ -85,13 +85,6 @@
     "health" : 3,
     "mana" : 2
   } ], [ {
-    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
-    "colors" : [ "Brown", "Black", "Grey" ],
-    "name" : "Goliath",
-    "attackDamage" : 2,
-    "health" : 7,
-    "mana" : 3
-  }, {
     "description" : "Standard card: Death incarnate. No better time to die than now.",
     "colors" : [ "Black", "Yellow" ],
     "name" : "The Ripper",
@@ -102,15 +95,15 @@
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden",
-    "attackDamage" : 3,
-    "health" : 6,
+    "attackDamage" : 1,
+    "health" : 7,
     "mana" : 2
   } ], [ {
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Yellow", "Orange", "Red" ],
     "name" : "Miraj",
-    "attackDamage" : 5,
-    "health" : 4,
+    "attackDamage" : 3,
+    "health" : 2,
     "mana" : 4
   }, {
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
@@ -123,8 +116,8 @@
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Yellow", "Orange", "Red" ],
     "name" : "Miraj",
-    "attackDamage" : 5,
-    "health" : 4,
+    "attackDamage" : 3,
+    "health" : 6,
     "mana" : 5
   } ], [ {
     "description" : "Premium card: Nobody suspects an outcast, not even the Gods.",

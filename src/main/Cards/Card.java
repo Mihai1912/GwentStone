@@ -1,6 +1,8 @@
 package main.Cards;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fileio.ActionsInput;
+import main.Player;
 
 import java.security.PublicKey;
 import java.util.ArrayList;
@@ -56,8 +58,7 @@ public class Card {
     public Card() {
     }
 
-    public void action () {
-
+    public void action (Player actingPlayer , Player otherPlayer , ActionsInput command) {
     }
 
     @JsonIgnore
