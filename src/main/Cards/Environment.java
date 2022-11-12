@@ -34,7 +34,7 @@ public class Environment extends Card{
     public void action(Player actingPlayer , Player otherPlayer , ActionsInput command) {
         if (getName().equals("Winterfell")) {
 //            System.out.println("use Winterfell");
-            command.getAffectedRow();
+//            command.getAffectedRow();
             if (command.getAffectedRow() == 2 || command.getAffectedRow() == 1) {
                 for (Card card : otherPlayer.getFrontRow()) {
                     ((Minion)card).setFrozen(true);
@@ -50,8 +50,21 @@ public class Environment extends Card{
             }
             actingPlayer.setMana(actingPlayer.getMana()-getMana());
             actingPlayer.getInHandCard().remove(command.getHandIdx());
+            actingPlayer.getEnvironmentInHand().remove(command.getHandIdx());
 //            System.out.println(getName());
         } else if (getName().equals("Firestorm")) {
+            if (command.getAffectedRow() == 2 || command.getAffectedRow() == 1) {
+                for (Card card : otherPlayer.getFrontRow()) {
+                    ((Minion)card).setHealt(((Minion)card).getHealth()-1);
+                }
+            } else {
+                for (Card card : otherPlayer.getBackRow()) {
+                    ((Minion)card).setHealt(((Minion)card).getHealth()-1);
+                }
+            }
+            actingPlayer.setMana(actingPlayer.getMana()-getMana());
+            actingPlayer.getInHandCard().remove(command.getHandIdx());
+            actingPlayer.getEnvironmentInHand().remove(command.getHandIdx());
 //            System.out.println(getName());
         } else if (getName().equals("Heart Hound")) {
 //            System.out.println(getName());

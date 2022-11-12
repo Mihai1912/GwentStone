@@ -22,6 +22,15 @@ public class Player {
     private ArrayList<Card> frontRow = new ArrayList<>();
     private ArrayList<Card> backRow = new ArrayList<>();
 
+    private ArrayList<Card> environmentInHand = new ArrayList<>();
+
+    public ArrayList<Card> getEnvironmentInHand() {
+        return environmentInHand;
+    }
+
+    public void setEnvironmentInHand(ArrayList<Card> environmentInHand) {
+        this.environmentInHand = environmentInHand;
+    }
 
     public void setInHandCard(ArrayList<Card> inHandCard) {
         this.inHandCard = inHandCard;
@@ -99,6 +108,10 @@ public class Player {
 
     public void drawCard () {
         inHandCard.add(deck.get(0));
+        if (deck.get(0).getName().equals("Winterfell") || deck.get(0).getName().equals("Firestorm")
+        || deck.get(0).getName().equals("Heart Hound")) {
+            environmentInHand.add(deck.get(0));
+        }
         deck.remove(0);
     }
 
