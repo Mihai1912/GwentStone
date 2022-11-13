@@ -80,51 +80,59 @@ public final class Main {
         ArrayNode output = objectMapper.createArrayNode();
 
         //TODO add here the entry point to your implementation
-        int noGame = inputData.getGames().size() - 1;
-        initDecks Decks = new initDecks(inputData);
-        ArrayList<ArrayList<Card>> table = new ArrayList<>();
-        Player Player1 = new Player();
-        Player1.setIdx(1);
-        Player Player2 = new Player();
-        Player2.setIdx(2);
-        if (inputData.getGames().get(noGame).getStartGame().getStartingPlayer() == 1) {
-            Player1.setTurn(true);
-            Player2.setTurn(false);
-        } else {
-            Player1.setTurn(false);
-            Player2.setTurn(true);
-        }
-        CardInput heroPlayer1 = inputData.getGames().get(noGame).getStartGame().getPlayerOneHero();
-        CardInput heroPlayer2 = inputData.getGames().get(noGame).getStartGame().getPlayerTwoHero();
-        Player1.setDeck(Decks.deckPlayer1);
-        Player2.setDeck(Decks.deckPlayer2);
-        CardTypeIdentificator hero1 = new CardTypeIdentificator(heroPlayer1);
-        CardTypeIdentificator hero2 = new CardTypeIdentificator(heroPlayer2);
-        Player1.setHero(hero1.card);
-        Player2.setHero(hero2.card);
-        if (Player1.isTurn()) {
-            NewRound newRound = new NewRound(Player1 , Player2);
-        } else {
-            NewRound newRound = new NewRound(Player2 , Player1);
-        }
+        int noGame = inputData.getGames().size();
+        for (int game = 0 ; game < noGame ; game++) {
+            initDecks Decks = new initDecks(inputData);
+            ArrayList<ArrayList<Card>> table = new ArrayList<>();
+            Player Player1 = new Player();
+            Player1.setIdx(1);
+            Player Player2 = new Player();
+            Player2.setIdx(2);
+            if (inputData.getGames().get(game).getStartGame().getStartingPlayer() == 1) {
+                Player1.setTurn(true);
+                Player2.setTurn(false);
+            } else {
+                Player1.setTurn(false);
+                Player2.setTurn(true);
+            }
+            CardInput heroPlayer1 = inputData.getGames().get(game).getStartGame().getPlayerOneHero();
+            CardInput heroPlayer2 = inputData.getGames().get(game).getStartGame().getPlayerTwoHero();
+            Player1.setDeck(Decks.deckPlayer1);
+            Player2.setDeck(Decks.deckPlayer2);
+            CardTypeIdentificator hero1 = new CardTypeIdentificator(heroPlayer1);
+            CardTypeIdentificator hero2 = new CardTypeIdentificator(heroPlayer2);
+            Player1.setHero(hero1.card);
+            Player2.setHero(hero2.card);
+
+
+            System.out.println("===============================");
+
+
+            if (Player1.isTurn()) {
+                NewRound newRound = new NewRound(Player1 , Player2);
+            } else {
+                NewRound newRound = new NewRound(Player2 , Player1);
+            }
 //        Player1.drawCard();
 //        Player2.drawCard();
 
-        ActionsInput commnd;
-        ArrayList<ActionsInput> actions;
-        actions = inputData.getGames().get(noGame).getActions();
 
-        for (int i = 0 ; i < actions.size() ; i++) {
-            commnd = actions.get(i);
-            Interpret cmdint = new Interpret();
-            cmdint.setCmd(commnd);
-            if (commnd.getPlayerIdx() == 1 ||
-                    (Player1.isTurn())) {
-                cmdint.interpretation(commnd , output , Player1 , Player2 , table);
+            ActionsInput commnd;
+            ArrayList<ActionsInput> actions;
+            actions = inputData.getGames().get(game).getActions();
+
+            for (int i = 0 ; i < actions.size() ; i++) {
+                commnd = actions.get(i);
+                Interpret cmdint = new Interpret();
+                cmdint.setCmd(commnd);
+                if (commnd.getPlayerIdx() == 1 ||
+                        (Player1.isTurn())) {
+                    cmdint.interpretation(commnd , output , Player1 , Player2 , table);
 //                System.out.println("caz1");
-            } else if (Player2.isTurn()){
-                cmdint.interpretation(commnd , output , Player2 , Player1 , table);
+                } else if (Player2.isTurn()){
+                    cmdint.interpretation(commnd , output , Player2 , Player1 , table);
 //                System.out.println("caz2");
+                }
             }
         }
 

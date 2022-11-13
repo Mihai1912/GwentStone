@@ -33,19 +33,29 @@ public class Environment extends Card{
 
     public void action(Player actingPlayer , Player otherPlayer , ActionsInput command) {
         if (getName().equals("Winterfell")) {
-//            System.out.println("use Winterfell");
+            System.out.println("use Winterfell");
 //            command.getAffectedRow();
             if (command.getAffectedRow() == 2 || command.getAffectedRow() == 1) {
                 for (Card card : otherPlayer.getFrontRow()) {
-                    ((Minion)card).setFrozen(true);
-                    ((Minion)card).setFrozenForRound(true);
-                    ((Minion)card).setUnfrozenRound(actingPlayer.getNoRound()+2);
+//                    ((Minion)card).setFrozen(true);
+                    if (otherPlayer.getNoTurns() == 1) {
+                        ((Minion)card).setFrozenForRound(true);
+                        ((Minion)card).setUnfrozenRound(actingPlayer.getNoRound()+1);
+                    } else {
+                        ((Minion)card).setFrozenForRound(true);
+                        ((Minion)card).setUnfrozenRound(actingPlayer.getNoRound()+2);
+                    }
                 }
             } else {
                 for (Card card : otherPlayer.getBackRow()) {
-                    ((Minion)card).setFrozen(true);
-                    ((Minion)card).setFrozenForRound(true);
-                    ((Minion)card).setUnfrozenRound(actingPlayer.getNoRound()+2);
+//                    ((Minion)card).setFrozen(true);
+                    if (otherPlayer.getNoTurns() == 1) {
+                        ((Minion)card).setFrozenForRound(true);
+                        ((Minion)card).setUnfrozenRound(actingPlayer.getNoRound()+1);
+                    } else {
+                        ((Minion)card).setFrozenForRound(true);
+                        ((Minion)card).setUnfrozenRound(actingPlayer.getNoRound()+2);
+                    }
                 }
             }
             actingPlayer.setMana(actingPlayer.getMana()-getMana());

@@ -68,6 +68,10 @@ public class Card {
     @JsonIgnore
     public void setUnfrozenRound(int unfrozenRound) {
     }
+    @JsonIgnore
+    public void setFrozenForRound(boolean frozenForRound) {
+
+    }
 
     @Override
     public String toString() {

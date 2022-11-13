@@ -7,6 +7,7 @@ import main.Actions.NewRound;
 import main.Actions.PlaceCard;
 import main.Cards.Card;
 import main.Cards.Environment;
+import main.Cards.Hero;
 import main.Cards.Minion;
 import main.Player;
 import main.RemoveDeadCard;
@@ -33,9 +34,17 @@ public class Interpret {
                         .putPOJO("output" , otherPlayer.getDeck());
             }
         } else if (command.getCommand().equals("getPlayerHero")) {
-            output.addObject().put("command" , command.getCommand())
-                    .put("playerIdx" , command.getPlayerIdx())
-                    .putPOJO("output" , actingPlayer.getHero());
+            if (actingPlayer.getIdx() == command.getPlayerIdx()) {
+                Hero heroAux = new Hero(actingPlayer.getHero());
+                output.addObject().put("command" , command.getCommand())
+                        .put("playerIdx" , command.getPlayerIdx())
+                        .putPOJO("output" , heroAux);
+            } else {
+                Hero heroAux = new Hero(otherPlayer.getHero());
+                output.addObject().put("command" , command.getCommand())
+                        .put("playerIdx" , command.getPlayerIdx())
+                        .putPOJO("output" , heroAux);
+            }
         } else if (command.getCommand().equals("getPlayerTurn")) {
             output.addObject().put("command",command.getCommand()).put("output" , actingPlayer.getIdx());
         } else if (command.getCommand().equals("getCardsInHand")) {
@@ -371,6 +380,103 @@ public class Interpret {
                                     .putPOJO("cardAttacker" , command.getCardAttacker())
                                     .putPOJO("cardAttacked" , command.getCardAttacked())
                                     .put("error" , "Attacker card has already attacked this turn.");
+                }
+            } else if (command.getCommand().equals("useAttackHero")) {
+//                System.out.println(command.getCardAttacker().getX() + " " + command.getCardAttacker().getY());
+                Card attacker = new Card();
+                attacker = table.get(command.getCardAttacker().getX()).get(command.getCardAttacker().getY());
+                if (!(((Minion)attacker).isFrozen())) {
+                    if (!(((Minion)attacker).isFrozenForRound())) {
+                        boolean value1 = false;
+                        if (actingPlayer.getIdx() == 1) {
+                            value1 = actingPlayer.ifAttackTank(table.get(0) , table.get(1));
+                        } else {
+                            value1 = actingPlayer.ifAttackTank(table.get(2) , table.get(3));
+                        }
+                        if (!value1) {
+                            otherPlayer.getHero().setHealth(otherPlayer.getHero().getHealth()-((Minion)attacker).getAttackDamage());
+                            ((Minion) attacker).setFrozen(true);
+                            if (otherPlayer.getHero().getHealth() <= 0) {
+                                if (otherPlayer.getIdx() == 1) {
+                                    output.addObject().put("gameEnded" , "Player two killed the enemy hero.");
+                                } else {
+                                    output.addObject().put("gameEnded" , "Player one killed the enemy hero.");
+                                }
+                            }
+                        } else {
+                            output.addObject().put("command", command.getCommand())
+                                    .putPOJO("cardAttacker", command.getCardAttacker())
+                                    .put("error", "Attacked card is not of type 'Tank'.");
+                        }
+                    } else {
+                        output.addObject().put("command" , command.getCommand())
+                                .putPOJO("cardAttacker" , command.getCardAttacker())
+                                .put("error" , "Attacker card is frozen.");
+                    }
+                } else {
+                    output.addObject().put("command" , command.getCommand())
+                            .putPOJO("cardAttacker" , command.getCardAttacker())
+                            .put("error" , "Attacker card has already attacked this turn.");
+                }
+            } else if ( command.getCommand().equals("useHeroAbility")) {
+                if (actingPlayer.getMana() >= actingPlayer.getHero().getMana()) {
+                    if (!(actingPlayer.getHero().isFrozen())) {
+                        if (actingPlayer.getHero().getName().equals("Lord Royce") ||
+                            actingPlayer.getHero().getName().equals("Empress Thorina")) {
+                            if (actingPlayer.getIdx() == 1) {
+                                if (command.getAffectedRow() == 1 || command.getAffectedRow() == 0) {
+                                    actingPlayer.getHero().action(actingPlayer , otherPlayer , command);
+                                    actingPlayer.getHero().setFrozen(true);
+                                    actingPlayer.setMana(actingPlayer.getMana()-actingPlayer.getHero().getMana());
+                                } else {
+                                    output.addObject().put("command" , command.getCommand())
+                                            .put("affectedRow" , command.getAffectedRow())
+                                            .put("error" , "Selected row does not belong to the enemy.");
+                                }
+                            } else {
+                                if (command.getAffectedRow() == 3 || command.getAffectedRow() == 2) {
+                                    actingPlayer.getHero().action(actingPlayer , otherPlayer , command);
+                                    actingPlayer.getHero().setFrozen(true);
+                                    actingPlayer.setMana(actingPlayer.getMana()-actingPlayer.getHero().getMana());
+                                } else {
+                                    output.addObject().put("command" , command.getCommand())
+                                            .put("affectedRow" , command.getAffectedRow())
+                                            .put("error" , "Selected row does not belong to the enemy.");
+                                }
+                            }
+                        } else if (actingPlayer.getHero().getName().equals("King Mudface") ||
+                                actingPlayer.getHero().getName().equals("General Kocioraw")){
+                            if (actingPlayer.getIdx() == 1) {
+                                if (command.getAffectedRow() == 3 || command.getAffectedRow() == 2) {
+                                actingPlayer.getHero().action(actingPlayer , otherPlayer , command);
+                                actingPlayer.getHero().setFrozen(true);
+                                actingPlayer.setMana(actingPlayer.getMana()-actingPlayer.getHero().getMana());
+                                } else {
+                                    output.addObject().put("command" , command.getCommand())
+                                            .put("affectedRow" , command.getAffectedRow())
+                                            .put("error" , "Selected row does not belong to the current player.");
+                                }
+                            } else {
+                                if (command.getAffectedRow() == 1 || command.getAffectedRow() == 0) {
+                                    actingPlayer.getHero().action(actingPlayer , otherPlayer , command);
+                                    actingPlayer.getHero().setFrozen(true);
+                                    actingPlayer.setMana(actingPlayer.getMana()-actingPlayer.getHero().getMana());
+                                } else {
+                                    output.addObject().put("command" , command.getCommand())
+                                            .put("affectedRow" , command.getAffectedRow())
+                                            .put("error" , "Selected row does not belong to the current player.");
+                                }
+                            }
+                        }
+                    } else {
+                        output.addObject().put("command" , command.getCommand())
+                                .put("affectedRow" , command.getAffectedRow())
+                                .put("error" , "Hero has already attacked this turn.");
+                    }
+                } else {
+                    output.addObject().put("command" , command.getCommand())
+                            .put("affectedRow" , command.getAffectedRow())
+                            .put("error" , "Not enough mana to use hero's ability.");
                 }
             }
         }

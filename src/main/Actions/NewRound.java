@@ -10,11 +10,15 @@ public class NewRound {
     }
 
     public NewRound(Player actingPlayer , Player otherPlayer) {
-//        System.out.println("nr Runde " + actingPlayer.getNoRound());
         actingPlayer.setNoRound((actingPlayer.getNoRound()+1));
         otherPlayer.setNoRound((otherPlayer.getNoRound()+1));
-        actingPlayer.drawCard();
-        otherPlayer.drawCard();
+        System.out.println("nr Runde " + actingPlayer.getNoRound());
+        if (actingPlayer.getDeck().size() > 0) {
+            actingPlayer.drawCard();
+        }
+        if (otherPlayer.getDeck().size() > 0) {
+            otherPlayer.drawCard();
+        }
         actingPlayer.setMana(actingPlayer.getMana()+actingPlayer.getNoRound());
         otherPlayer.setMana(otherPlayer.getMana()+actingPlayer.getNoRound());
         for (Card card : actingPlayer.getFrontRow()) {
@@ -62,5 +66,7 @@ public class NewRound {
                 }
             }
         }
+        actingPlayer.getHero().setFrozen(false);
+        otherPlayer.getHero().setFrozen(false);
     }
 }
