@@ -9,6 +9,8 @@
   } ]
 }, {
   "command" : "getCardAtPosition",
+  "x" : 0,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: A drink can always be served, with the blood of his enemies.",
     "colors" : [ "Red", "Blue", "Pink" ],
@@ -19,6 +21,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 3,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
@@ -33,6 +37,8 @@
   "output" : [ ]
 }, {
   "command" : "getCardAtPosition",
+  "x" : 3,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
@@ -43,6 +49,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 0,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: A drink can always be served, with the blood of his enemies.",
     "colors" : [ "Red", "Blue", "Pink" ],

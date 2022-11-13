@@ -1,4 +1,9 @@
 [ {
+  "command" : "getCardAtPosition",
+  "x" : 0,
+  "y" : 3,
+  "output" : "No card available at that position."
+}, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {
     "x" : 0,
@@ -11,6 +16,8 @@
   "error" : "Attacker card is frozen."
 }, {
   "command" : "getCardAtPosition",
+  "x" : 3,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
     "colors" : [ "Yellow", "White" ],
@@ -39,6 +46,8 @@
   "output" : 2
 }, {
   "command" : "getCardAtPosition",
+  "x" : 0,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Yellow", "White" ],

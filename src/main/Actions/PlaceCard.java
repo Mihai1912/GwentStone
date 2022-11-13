@@ -6,10 +6,11 @@ import main.Player;
 
 import java.util.ArrayList;
 
-public class PlaceCard{
+public class PlaceCard {
     public PlaceCard() {
     }
-    public PlaceCard(Player actingPlayer , int cardIdx , ArrayList<ArrayList<Card>> table , Player otherplayer) {
+
+    public PlaceCard(Player actingPlayer, int cardIdx, ArrayList<ArrayList<Card>> table, Player otherplayer) {
         int minMana;
         minMana = actingPlayer.getInHandCard().get(cardIdx).getMana();
 
@@ -17,11 +18,10 @@ public class PlaceCard{
         cardToPlace = actingPlayer.getInHandCard().get(cardIdx);
 
 
-
         if (cardToPlace.getName().equals("The Ripper") ||
-            cardToPlace.getName().equals("Miraj") ||
-            cardToPlace.getName().equals("Goliath") ||
-            cardToPlace.getName().equals("Warden")) {
+                cardToPlace.getName().equals("Miraj") ||
+                cardToPlace.getName().equals("Goliath") ||
+                cardToPlace.getName().equals("Warden")) {
             actingPlayer.addInFrontRow(cardToPlace);
         } else {
             actingPlayer.addInBackRow(cardToPlace);
@@ -29,19 +29,19 @@ public class PlaceCard{
 
         if (actingPlayer.getIdx() == 2) {
             table.clear();
-            table.add(0 ,actingPlayer.getBackRow());
-            table.add(1 ,actingPlayer.getFrontRow());
-            table.add(2 ,otherplayer.getFrontRow());
-            table.add(3 ,otherplayer.getBackRow());
+            table.add(0, actingPlayer.getBackRow());
+            table.add(1, actingPlayer.getFrontRow());
+            table.add(2, otherplayer.getFrontRow());
+            table.add(3, otherplayer.getBackRow());
         } else {
             table.clear();
-            table.add(0 ,otherplayer.getBackRow());
-            table.add(1 ,otherplayer.getFrontRow());
-            table.add(2 ,actingPlayer.getFrontRow());
-            table.add(3 ,actingPlayer.getBackRow());
+            table.add(0, otherplayer.getBackRow());
+            table.add(1, otherplayer.getFrontRow());
+            table.add(2, actingPlayer.getFrontRow());
+            table.add(3, actingPlayer.getBackRow());
         }
 
-        actingPlayer.setMana(actingPlayer.getMana()-minMana);
+        actingPlayer.setMana(actingPlayer.getMana() - minMana);
         actingPlayer.getInHandCard().remove(cardIdx);
     }
 }

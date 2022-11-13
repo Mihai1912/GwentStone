@@ -1,5 +1,7 @@
 [ {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Red", "Purple" ],
@@ -55,6 +57,8 @@
   "output" : 2
 }, {
   "command" : "getCardAtPosition",
+  "x" : 0,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
     "colors" : [ "Black", "White" ],

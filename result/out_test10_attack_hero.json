@@ -23,6 +23,8 @@
   "output" : 1
 }, {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",
     "colors" : [ "Yellow", "Orange", "Red" ],
@@ -33,6 +35,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 3,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
     "colors" : [ "Black", "Grey", "Blue" ],
@@ -86,6 +90,8 @@
   "output" : 1
 }, {
   "command" : "getCardAtPosition",
+  "x" : 3,
+  "y" : 1,
   "output" : {
     "description" : "Standard card: Thrown from the highest cliff, revenge will be his glory.",
     "colors" : [ "Black", "White", "Red" ],
@@ -96,6 +102,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",
     "colors" : [ "Yellow", "Orange", "Red" ],

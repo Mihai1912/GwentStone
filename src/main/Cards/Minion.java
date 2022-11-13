@@ -6,7 +6,7 @@ import main.Player;
 
 import java.util.ArrayList;
 
-public class Minion extends Card{
+public class Minion extends Card {
     private int attackDamage;
     private int health;
     private int mana;
@@ -80,10 +80,11 @@ public class Minion extends Card{
         this.unfrozenRound = unfrozenRound;
     }
 
-    public Minion() { }
+    public Minion() {
+    }
 
-    public Minion(int mana , String description , ArrayList<String> colors,
-                  String name , int healt , int attackDamage) {
+    public Minion(int mana, String description, ArrayList<String> colors,
+                  String name, int healt, int attackDamage) {
         setColors(colors);
         setDescription(description);
         setName(name);
@@ -99,7 +100,7 @@ public class Minion extends Card{
         this.attackDamage = minion.getAttackDamage();
     }
 
-    public void action(Player actingPlayer , Player otherPlayer , ActionsInput command) {
+    public void action(Player actingPlayer, Player otherPlayer, ActionsInput command) {
         Card cardAttacked = new Card();
         Card cardAttacker = new Card();
         int aux = 0;
@@ -108,27 +109,27 @@ public class Minion extends Card{
             int yAttacked = command.getCardAttacked().getY();
             if (xAttacked == 1 || xAttacked == 2) {
                 cardAttacked = actingPlayer.getFrontRow().get(yAttacked);
-                ((Minion)cardAttacked).setHealt(((Minion)cardAttacked).getHealth()+2);
+                ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth() + 2);
             } else {
                 cardAttacked = actingPlayer.getBackRow().get(yAttacked);
-                ((Minion)cardAttacked).setHealt(((Minion)cardAttacked).getHealth()+2);
+                ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth() + 2);
             }
         } else if (getName().equals("The Ripper")) {
             int xAttacked = command.getCardAttacked().getX();
             int yAttacked = command.getCardAttacked().getY();
             if (xAttacked == 1 || xAttacked == 2) {
                 cardAttacked = otherPlayer.getFrontRow().get(yAttacked);
-                if (((Minion)cardAttacked).getAttackDamage() < 2) {
-                    ((Minion)cardAttacked).setAttackDamage(0);
+                if (((Minion) cardAttacked).getAttackDamage() < 2) {
+                    ((Minion) cardAttacked).setAttackDamage(0);
                 } else {
-                    ((Minion)cardAttacked).setAttackDamage(((Minion)cardAttacked).getAttackDamage()-2);
+                    ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked).getAttackDamage() - 2);
                 }
             } else {
                 cardAttacked = otherPlayer.getBackRow().get(yAttacked);
-                if (((Minion)cardAttacked).getAttackDamage() < 2) {
-                    ((Minion)cardAttacked).setAttackDamage(0);
+                if (((Minion) cardAttacked).getAttackDamage() < 2) {
+                    ((Minion) cardAttacked).setAttackDamage(0);
                 } else {
-                    ((Minion)cardAttacked).setAttackDamage(((Minion)cardAttacked).getAttackDamage()-2);
+                    ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked).getAttackDamage() - 2);
                 }
             }
         } else if (getName().equals("Miraj")) {
@@ -146,22 +147,22 @@ public class Minion extends Card{
             } else {
                 cardAttacker = actingPlayer.getBackRow().get(yAttacker);
             }
-            aux = ((Minion)cardAttacker).getHealth();
-            ((Minion)cardAttacker).setHealt(((Minion)cardAttacked).getHealth());
-            ((Minion)cardAttacked).setHealt(aux);
+            aux = ((Minion) cardAttacker).getHealth();
+            ((Minion) cardAttacker).setHealt(((Minion) cardAttacked).getHealth());
+            ((Minion) cardAttacked).setHealt(aux);
         } else if (getName().equals("The Cursed One")) {
             int xAttacked = command.getCardAttacked().getX();
             int yAttacked = command.getCardAttacked().getY();
             if (xAttacked == 1 || xAttacked == 2) {
                 cardAttacked = otherPlayer.getFrontRow().get(yAttacked);
-                aux = ((Minion)cardAttacked).getHealth();
-                ((Minion)cardAttacked).setHealt(((Minion)cardAttacked).getAttackDamage());
-                ((Minion)cardAttacked).setAttackDamage(aux);
+                aux = ((Minion) cardAttacked).getHealth();
+                ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getAttackDamage());
+                ((Minion) cardAttacked).setAttackDamage(aux);
             } else {
                 cardAttacked = otherPlayer.getBackRow().get(yAttacked);
-                aux = ((Minion)cardAttacked).getHealth();
-                ((Minion)cardAttacked).setHealt(((Minion)cardAttacked).getAttackDamage());
-                ((Minion)cardAttacked).setAttackDamage(aux);
+                aux = ((Minion) cardAttacked).getHealth();
+                ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getAttackDamage());
+                ((Minion) cardAttacked).setAttackDamage(aux);
             }
         }
     }

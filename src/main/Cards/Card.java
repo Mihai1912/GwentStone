@@ -58,16 +58,18 @@ public class Card {
     public Card() {
     }
 
-    public void action (Player actingPlayer , Player otherPlayer , ActionsInput command) {
+    public void action(Player actingPlayer, Player otherPlayer, ActionsInput command) {
     }
 
     @JsonIgnore
     public int getUnfrozenRound() {
         return 0;
     }
+
     @JsonIgnore
     public void setUnfrozenRound(int unfrozenRound) {
     }
+
     @JsonIgnore
     public void setFrozenForRound(boolean frozenForRound) {
 

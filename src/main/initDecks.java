@@ -13,6 +13,7 @@ import static java.util.Collections.shuffle;
 public class initDecks {
     ArrayList<Card> deckPlayer1 = new ArrayList<>();
     ArrayList<Card> deckPlayer2 = new ArrayList<>();
+
     public initDecks(Input inputData) {
         ArrayList<ArrayList<CardInput>> decksPlayer1;
         decksPlayer1 = inputData.getPlayerOneDecks().getDecks();
@@ -24,7 +25,7 @@ public class initDecks {
         int player1DeckIdx = inputData.getGames().get(0).getStartGame().getPlayerOneDeckIdx();
         int player2DeckIdx = inputData.getGames().get(0).getStartGame().getPlayerTwoDeckIdx();
 
-        for (int i = 0 ; i < deckSize ; i++) {
+        for (int i = 0; i < deckSize; i++) {
             CardTypeIdentificator cardDeck1 = new CardTypeIdentificator(decksPlayer1.get(player1DeckIdx).get(i));
             deckPlayer1.add(cardDeck1.card);
             CardTypeIdentificator cardDeck2 = new CardTypeIdentificator(decksPlayer2.get(player2DeckIdx).get(i));
@@ -33,7 +34,7 @@ public class initDecks {
 
 //        System.out.println(inputData.getGames().get(noGame).getStartGame().getShuffleSeed());
 
-        shuffle(deckPlayer1 , new Random(inputData.getGames().get(noGame).getStartGame().getShuffleSeed()));
-        shuffle(deckPlayer2 , new Random(inputData.getGames().get(noGame).getStartGame().getShuffleSeed()));
+        shuffle(deckPlayer1, new Random(inputData.getGames().get(noGame).getStartGame().getShuffleSeed()));
+        shuffle(deckPlayer2, new Random(inputData.getGames().get(noGame).getStartGame().getShuffleSeed()));
     }
 }

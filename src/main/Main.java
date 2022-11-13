@@ -6,13 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import checker.CheckerConstants;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.ActionsInput;
 import fileio.CardInput;
 import fileio.Input;
 import main.Actions.NewRound;
 import main.Cards.Card;
-import main.Cards.Minion;
 import main.CommandInterpretor.Interpret;
 
 import java.io.File;
@@ -22,7 +20,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
-
 
 
 /**
@@ -38,6 +35,7 @@ public final class Main {
     /**
      * DO NOT MODIFY MAIN METHOD
      * Call the checker
+     *
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
@@ -81,7 +79,7 @@ public final class Main {
 
         //TODO add here the entry point to your implementation
         int noGame = inputData.getGames().size();
-        for (int game = 0 ; game < noGame ; game++) {
+        for (int game = 0; game < noGame; game++) {
             initDecks Decks = new initDecks(inputData);
             ArrayList<ArrayList<Card>> table = new ArrayList<>();
             Player Player1 = new Player();
@@ -104,33 +102,26 @@ public final class Main {
             Player1.setHero(hero1.card);
             Player2.setHero(hero2.card);
 
-
-            System.out.println("===============================");
-
-
             if (Player1.isTurn()) {
-                NewRound newRound = new NewRound(Player1 , Player2);
+                NewRound newRound = new NewRound(Player1, Player2);
             } else {
-                NewRound newRound = new NewRound(Player2 , Player1);
+                NewRound newRound = new NewRound(Player2, Player1);
             }
-//        Player1.drawCard();
-//        Player2.drawCard();
-
 
             ActionsInput commnd;
             ArrayList<ActionsInput> actions;
             actions = inputData.getGames().get(game).getActions();
 
-            for (int i = 0 ; i < actions.size() ; i++) {
-                commnd = actions.get(i);
+            for (ActionsInput action : actions) {
+                commnd = action;
                 Interpret cmdint = new Interpret();
                 cmdint.setCmd(commnd);
                 if (commnd.getPlayerIdx() == 1 ||
                         (Player1.isTurn())) {
-                    cmdint.interpretation(commnd , output , Player1 , Player2 , table);
+                    cmdint.interpretation(commnd, output, Player1, Player2, table , inputData);
 //                System.out.println("caz1");
-                } else if (Player2.isTurn()){
-                    cmdint.interpretation(commnd , output , Player2 , Player1 , table);
+                } else if (Player2.isTurn()) {
+                    cmdint.interpretation(commnd, output, Player2, Player1, table , inputData);
 //                System.out.println("caz2");
                 }
             }

@@ -1,5 +1,7 @@
 [ {
   "command" : "getCardAtPosition",
+  "x" : 1,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Black", "Yellow" ],
@@ -10,6 +12,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Black", "White", "Green" ],
@@ -30,6 +34,8 @@
   "output" : 1
 }, {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Black", "White", "Green" ],
@@ -40,6 +46,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 1,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Black", "Yellow" ],

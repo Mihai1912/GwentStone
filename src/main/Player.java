@@ -1,8 +1,6 @@
 package main;
 
-import fileio.CardInput;
 import main.Cards.Card;
-import main.Cards.Environment;
 import main.Cards.Hero;
 import main.Cards.Minion;
 
@@ -22,6 +20,8 @@ public class Player {
     private ArrayList<Card> frontRow = new ArrayList<>();
     private ArrayList<Card> backRow = new ArrayList<>();
 
+    private int win = 0 ;
+
     private ArrayList<Card> environmentInHand = new ArrayList<>();
 
     public ArrayList<Card> getEnvironmentInHand() {
@@ -30,6 +30,14 @@ public class Player {
 
     public void setEnvironmentInHand(ArrayList<Card> environmentInHand) {
         this.environmentInHand = environmentInHand;
+    }
+
+    public int getWin() {
+        return win;
+    }
+
+    public void setWin(int win) {
+        this.win = win;
     }
 
     public void setInHandCard(ArrayList<Card> inHandCard) {
@@ -105,42 +113,41 @@ public class Player {
     }
 
 
-
-    public void drawCard () {
+    public void drawCard() {
         inHandCard.add(deck.get(0));
         if (deck.get(0).getName().equals("Winterfell") || deck.get(0).getName().equals("Firestorm")
-        || deck.get(0).getName().equals("Heart Hound")) {
+                || deck.get(0).getName().equals("Heart Hound")) {
             environmentInHand.add(deck.get(0));
         }
         deck.remove(0);
     }
 
-    public void endTurn (Player player) {
+    public void endTurn(Player player) {
         setTurn(false);
         player.setTurn(true);
         setNoTurns(0);
     }
 
-    public boolean enoughManaToPlaceCard (Card card) {
+    public boolean enoughManaToPlaceCard(Card card) {
         return getMana() >= card.getMana();
     }
 
-    public void addInFrontRow (Card card) {
+    public void addInFrontRow(Card card) {
         frontRow.add(card);
     }
 
-    public  void addInBackRow (Card card) {
+    public void addInBackRow(Card card) {
         backRow.add(card);
     }
 
-    public boolean ifAttackTank (ArrayList<Card> row1 , ArrayList<Card> row2) {
+    public boolean ifAttackTank(ArrayList<Card> row1, ArrayList<Card> row2) {
         for (Card card : row1) {
-            if (((Minion)card).isTank()) {
+            if (((Minion) card).isTank()) {
                 return true;
             }
         }
         for (Card card : row2) {
-            if (((Minion)card).isTank()) {
+            if (((Minion) card).isTank()) {
                 return true;
             }
         }

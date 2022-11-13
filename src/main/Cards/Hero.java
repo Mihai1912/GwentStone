@@ -6,7 +6,7 @@ import main.Player;
 
 import java.util.ArrayList;
 
-public class Hero extends Card{
+public class Hero extends Card {
     private int health = 30;
     private int mana;
     @JsonIgnore
@@ -36,9 +36,10 @@ public class Hero extends Card{
         this.mana = mana;
     }
 
-    public Hero() { }
+    public Hero() {
+    }
 
-    public Hero(int mana , String description , ArrayList<String> colors,
+    public Hero(int mana, String description, ArrayList<String> colors,
                 String name) {
         setColors(colors);
         setDescription(description);
@@ -54,15 +55,15 @@ public class Hero extends Card{
         setColors(hero.getColors());
     }
 
-    public void action (Player actingPlayer , Player otherPlayer , ActionsInput command) {
+    public void action(Player actingPlayer, Player otherPlayer, ActionsInput command) {
         if (getName().equals("Lord Royce")) {
             if (otherPlayer.getIdx() == 1) {
                 if (command.getAffectedRow() == 2) {
                     int maxAttack = 0;
                     Card targetCard = new Card();
                     for (Card card : otherPlayer.getFrontRow()) {
-                        if (((Minion)card).getAttackDamage() > maxAttack) {
-                            maxAttack = ((Minion)card).getAttackDamage();
+                        if (((Minion) card).getAttackDamage() > maxAttack) {
+                            maxAttack = ((Minion) card).getAttackDamage();
                             targetCard = card;
                         }
                     }
@@ -71,8 +72,8 @@ public class Hero extends Card{
                     int maxAttack = 0;
                     Card targetCard = new Card();
                     for (Card card : otherPlayer.getBackRow()) {
-                        if (((Minion)card).getAttackDamage() > maxAttack) {
-                            maxAttack = ((Minion)card).getAttackDamage();
+                        if (((Minion) card).getAttackDamage() > maxAttack) {
+                            maxAttack = ((Minion) card).getAttackDamage();
                             targetCard = card;
                         }
                     }
@@ -83,8 +84,8 @@ public class Hero extends Card{
                     int maxAttack = 0;
                     Card targetCard = new Card();
                     for (Card card : otherPlayer.getFrontRow()) {
-                        if (((Minion)card).getAttackDamage() > maxAttack) {
-                            maxAttack = ((Minion)card).getAttackDamage();
+                        if (((Minion) card).getAttackDamage() > maxAttack) {
+                            maxAttack = ((Minion) card).getAttackDamage();
                             targetCard = card;
                         }
                     }
@@ -93,8 +94,8 @@ public class Hero extends Card{
                     int maxAttack = 0;
                     Card targetCard = new Card();
                     for (Card card : otherPlayer.getBackRow()) {
-                        if (((Minion)card).getAttackDamage() > maxAttack) {
-                            maxAttack = ((Minion)card).getAttackDamage();
+                        if (((Minion) card).getAttackDamage() > maxAttack) {
+                            maxAttack = ((Minion) card).getAttackDamage();
                             targetCard = card;
                         }
                     }
@@ -107,44 +108,44 @@ public class Hero extends Card{
                     int maxHealth = 0;
                     Card targetCard = new Card();
                     for (Card card : otherPlayer.getFrontRow()) {
-                        if (((Minion)card).getHealth() > maxHealth) {
-                            maxHealth = ((Minion)card).getHealth();
+                        if (((Minion) card).getHealth() > maxHealth) {
+                            maxHealth = ((Minion) card).getHealth();
                             targetCard = card;
                         }
                     }
-                    ((Minion)targetCard).setHealt(0);
+                    ((Minion) targetCard).setHealt(0);
                 } else {
                     int maxHealth = 0;
                     Card targetCard = new Card();
                     for (Card card : otherPlayer.getBackRow()) {
-                        if (((Minion)card).getHealth() > maxHealth) {
-                            maxHealth = ((Minion)card).getHealth();
+                        if (((Minion) card).getHealth() > maxHealth) {
+                            maxHealth = ((Minion) card).getHealth();
                             targetCard = card;
                         }
                     }
-                    ((Minion)targetCard).setHealt(0);
+                    ((Minion) targetCard).setHealt(0);
                 }
             } else {
                 if (command.getAffectedRow() == 1) {
                     int maxHealth = 0;
                     Card targetCard = new Card();
                     for (Card card : otherPlayer.getFrontRow()) {
-                        if (((Minion)card).getHealth() > maxHealth) {
-                            maxHealth = ((Minion)card).getHealth();
+                        if (((Minion) card).getHealth() > maxHealth) {
+                            maxHealth = ((Minion) card).getHealth();
                             targetCard = card;
                         }
                     }
-                    ((Minion)targetCard).setHealt(0);
+                    ((Minion) targetCard).setHealt(0);
                 } else {
                     int maxHealth = 0;
                     Card targetCard = new Card();
                     for (Card card : otherPlayer.getBackRow()) {
-                        if (((Minion)card).getHealth() > maxHealth) {
-                            maxHealth = ((Minion)card).getHealth();
+                        if (((Minion) card).getHealth() > maxHealth) {
+                            maxHealth = ((Minion) card).getHealth();
                             targetCard = card;
                         }
                     }
-                    ((Minion)targetCard).setHealt(0);
+                    ((Minion) targetCard).setHealt(0);
                 }
             }
         } else if (getName().equals("General Kocioraw")) {
@@ -172,21 +173,21 @@ public class Hero extends Card{
             if (actingPlayer.getIdx() == 1) {
                 if (command.getAffectedRow() == 2) {
                     for (Card card : actingPlayer.getFrontRow()) {
-                        ((Minion)card).setAttackDamage(((Minion)card).getAttackDamage()+1);
+                        ((Minion) card).setAttackDamage(((Minion) card).getAttackDamage() + 1);
                     }
-                } else if (command.getAffectedRow() == 3){
+                } else if (command.getAffectedRow() == 3) {
                     for (Card card : actingPlayer.getBackRow()) {
-                        ((Minion)card).setAttackDamage(((Minion)card).getAttackDamage()+1);
+                        ((Minion) card).setAttackDamage(((Minion) card).getAttackDamage() + 1);
                     }
                 }
-            } else if (actingPlayer.getIdx() == 2){
+            } else if (actingPlayer.getIdx() == 2) {
                 if (command.getAffectedRow() == 1) {
                     for (Card card : actingPlayer.getFrontRow()) {
-                        ((Minion)card).setAttackDamage(((Minion)card).getAttackDamage()+1);
+                        ((Minion) card).setAttackDamage(((Minion) card).getAttackDamage() + 1);
                     }
-                } else if (command.getAffectedRow() == 0){
+                } else if (command.getAffectedRow() == 0) {
                     for (Card card : actingPlayer.getBackRow()) {
-                        ((Minion)card).setAttackDamage(((Minion)card).getAttackDamage()+1);
+                        ((Minion) card).setAttackDamage(((Minion) card).getAttackDamage() + 1);
                     }
                 }
             }
@@ -215,21 +216,21 @@ public class Hero extends Card{
             if (actingPlayer.getIdx() == 1) {
                 if (command.getAffectedRow() == 2) {
                     for (Card card : actingPlayer.getFrontRow()) {
-                        ((Minion)card).setHealt(((Minion)card).getHealth()+1);
+                        ((Minion) card).setHealt(((Minion) card).getHealth() + 1);
                     }
                 } else {
                     for (Card card : actingPlayer.getBackRow()) {
-                        ((Minion)card).setHealt(((Minion)card).getHealth()+1);
+                        ((Minion) card).setHealt(((Minion) card).getHealth() + 1);
                     }
                 }
             } else {
                 if (command.getAffectedRow() == 1) {
                     for (Card card : actingPlayer.getFrontRow()) {
-                        ((Minion)card).setHealt(((Minion)card).getHealth()+1);
+                        ((Minion) card).setHealt(((Minion) card).getHealth() + 1);
                     }
                 } else {
                     for (Card card : actingPlayer.getBackRow()) {
-                        ((Minion)card).setHealt(((Minion)card).getHealth()+1);
+                        ((Minion) card).setHealt(((Minion) card).getHealth() + 1);
                     }
                 }
             }

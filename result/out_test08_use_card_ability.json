@@ -23,6 +23,8 @@
   "output" : 1
 }, {
   "command" : "getCardAtPosition",
+  "x" : 3,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: Nobody suspects an outcast, not even the Gods.",
     "colors" : [ "Black", "White", "Red" ],
@@ -56,6 +58,8 @@
   "output" : 1
 }, {
   "command" : "getCardAtPosition",
+  "x" : 3,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: Nobody suspects an outcast, not even the Gods.",
     "colors" : [ "Black", "White", "Red" ],

@@ -9,6 +9,8 @@
   } ]
 }, {
   "command" : "getCardAtPosition",
+  "x" : 1,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
     "colors" : [ "Red", "Purple" ],
@@ -19,6 +21,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Brown", "Black", "Grey" ],
@@ -39,6 +43,8 @@
   "output" : 1
 }, {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Brown", "Black", "Grey" ],
@@ -49,6 +55,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 1,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
     "colors" : [ "Red", "Purple" ],

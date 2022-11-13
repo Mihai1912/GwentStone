@@ -1,5 +1,7 @@
 [ {
   "command" : "getCardAtPosition",
+  "x" : 0,
+  "y" : 0,
   "output" : {
     "description" : "Premium card: Fear him. Your last breath is now.",
     "colors" : [ "Red", "Blue", "Pink" ],
@@ -10,6 +12,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],

@@ -1,5 +1,7 @@
 [ {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: Death incarnate. No better time to die than now.",
     "colors" : [ "Orange", "Red", "Black" ],
@@ -10,6 +12,8 @@
   }
 }, {
   "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
   "output" : {
     "description" : "Standard card: Death incarnate. No better time to die than now.",
     "colors" : [ "Orange", "Red", "Black" ],
