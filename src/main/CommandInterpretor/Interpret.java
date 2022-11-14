@@ -19,6 +19,25 @@ public class Interpret {
 
     ActionsInput cmd;
 
+    public static int player1Win  = 0;
+    public static int player2Win  = 0;
+
+    public static int getPlayer1Win() {
+        return player1Win;
+    }
+
+    public static int getPlayer2Win() {
+        return player2Win;
+    }
+
+    public static void setPlayer1Win(int player1Win) {
+        Interpret.player1Win = player1Win;
+    }
+
+    public static void setPlayer2Win(int player2Win) {
+        Interpret.player2Win = player2Win;
+    }
+
     public void interpretation(ActionsInput command, ArrayNode output, Player actingPlayer, Player otherPlayer,
                                ArrayList<ArrayList<Card>> table , Input inputData) {
 
@@ -187,24 +206,24 @@ public class Interpret {
                 break;
             case "getTotalGamesPlayed":
                 output.addObject().put("command", command.getCommand())
-                        .put("output", actingPlayer.getWin()+otherPlayer.getWin());
+                        .put("output", player1Win+player2Win);
                 break;
             case "getPlayerOneWins":
                 if (actingPlayer.getIdx() == 1) {
                     output.addObject().put("command", command.getCommand())
-                            .put("output", actingPlayer.getWin());
+                            .put("output", player1Win);
                 } else {
                     output.addObject().put("command", command.getCommand())
-                            .put("output", otherPlayer.getWin());
+                            .put("output", player1Win);
                 }
                 break;
             case "getPlayerTwoWins":
                 if (actingPlayer.getIdx() == 2) {
                     output.addObject().put("command", command.getCommand())
-                            .put("output", actingPlayer.getWin());
+                            .put("output", player2Win);
                 } else {
                     output.addObject().put("command", command.getCommand())
-                            .put("output", otherPlayer.getWin());
+                            .put("output", player2Win);
                 }
                 break;
         }
@@ -519,11 +538,16 @@ public class Interpret {
                                     if (otherPlayer.getHero().getHealth() <= 0) {
                                         if (otherPlayer.getIdx() == 1){
                                             output.addObject().put("gameEnded", "Player two killed the enemy hero.");
+                                            player2Win++;
+                                            System.out.println("Player two killed the enemy hero.");
                                         } else {
                                             output.addObject().put("gameEnded", "Player one killed the enemy hero.");
+                                            player1Win++;
+                                            System.out.println("Player one killed the enemy hero.");
                                         }
-                                        actingPlayer.setWin((actingPlayer.getWin()+1));
-                                        System.out.println("Player " + actingPlayer.getIdx() + " nr win " + actingPlayer.getWin());
+//                                        actingPlayer.setWin((actingPlayer.getWin()+1));
+                                        System.out.println( "win player 2 = "  + player2Win);
+                                        System.out.println( "win player 1 = "  + player1Win);
                                     }
                                 } else {
                                     output.addObject().put("command", command.getCommand())

@@ -85,7 +85,7 @@ public final class Main {
             System.out.println("=================================");
             Player Player1 = new Player();
             Player Player2 = new Player();
-            initDecks Decks = new initDecks(inputData , game);
+            initDecks Decks = new initDecks(inputData, game);
             ArrayList<ArrayList<Card>> table = new ArrayList<>();
 
             for (int i = 0; i < 4; i++) {
@@ -121,9 +121,10 @@ public final class Main {
             ArrayList<ActionsInput> actions;
             actions = inputData.getGames().get(game).getActions();
 
+
+            Interpret cmdint = new Interpret();
             for (ActionsInput action : actions) {
                 commnd = action;
-                Interpret cmdint = new Interpret();
                 cmdint.setCmd(commnd);
                 if (commnd.getPlayerIdx() == 1 ||
                         (Player1.isTurn())) {
@@ -135,6 +136,8 @@ public final class Main {
                 }
             }
         }
+        Interpret.setPlayer1Win(0);
+        Interpret.setPlayer2Win(0);
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);
