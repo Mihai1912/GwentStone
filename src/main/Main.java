@@ -79,12 +79,21 @@ public final class Main {
 
         //TODO add here the entry point to your implementation
         int noGame = inputData.getGames().size();
+//        Player Player1 = new Player();
+//        Player Player2 = new Player();
         for (int game = 0; game < noGame; game++) {
-            initDecks Decks = new initDecks(inputData);
-            ArrayList<ArrayList<Card>> table = new ArrayList<>();
+            System.out.println("=================================");
             Player Player1 = new Player();
-            Player1.setIdx(1);
             Player Player2 = new Player();
+            initDecks Decks = new initDecks(inputData , game);
+            ArrayList<ArrayList<Card>> table = new ArrayList<>();
+
+            for (int i = 0; i < 4; i++) {
+                table.add(new ArrayList<>());
+            }
+
+
+            Player1.setIdx(1);
             Player2.setIdx(2);
             if (inputData.getGames().get(game).getStartGame().getStartingPlayer() == 1) {
                 Player1.setTurn(true);
@@ -118,10 +127,10 @@ public final class Main {
                 cmdint.setCmd(commnd);
                 if (commnd.getPlayerIdx() == 1 ||
                         (Player1.isTurn())) {
-                    cmdint.interpretation(commnd, output, Player1, Player2, table , inputData);
+                    cmdint.interpretation(commnd, output, Player1, Player2, table, inputData);
 //                System.out.println("caz1");
                 } else if (Player2.isTurn()) {
-                    cmdint.interpretation(commnd, output, Player2, Player1, table , inputData);
+                    cmdint.interpretation(commnd, output, Player2, Player1, table, inputData);
 //                System.out.println("caz2");
                 }
             }

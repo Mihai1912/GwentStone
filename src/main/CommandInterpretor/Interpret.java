@@ -24,6 +24,31 @@ public class Interpret {
 
 //        System.out.println("acting " + actingPlayer.getIdx() + " outher " + otherPlayer.getIdx());
 
+//        ArrayList<Card> row1Aux = new ArrayList<>();
+//        ArrayList<Card> row2Aux = new ArrayList<>();
+//        ArrayList<Card> row3Aux = new ArrayList<>();
+//        ArrayList<Card> row4Aux = new ArrayList<>();
+//
+//        for (Card card : table.get(0)) {
+//            row1Aux.add(new Minion((Minion)card));
+//        }
+//        for (Card card : table.get(1)) {
+//            row2Aux.add(new Minion((Minion)card));
+//        }
+//        for (Card card : table.get(2)) {
+//            row3Aux.add(new Minion((Minion)card));
+//        }
+//        for (Card card : table.get(3)) {
+//            row4Aux.add(new Minion((Minion)card));
+//        }
+//
+//        ArrayList<ArrayList<Card>> table1 = new ArrayList<>();
+//        table1.add(row1Aux);
+//        table1.add(row2Aux);
+//        table1.add(row3Aux);
+//        table1.add(row4Aux);
+
+
         switch (command.getCommand()) {
             case "getPlayerDeck":
                 if (actingPlayer.getIdx() == command.getPlayerIdx()) {
@@ -92,7 +117,32 @@ public class Interpret {
                 }
                 break;
             case "getCardsOnTable":
-                output.addObject().put("command", command.getCommand()).putPOJO("output", table);
+
+                ArrayList<Card> row1Aux = new ArrayList<>();
+                ArrayList<Card> row2Aux = new ArrayList<>();
+                ArrayList<Card> row3Aux = new ArrayList<>();
+                ArrayList<Card> row4Aux = new ArrayList<>();
+
+                for (Card card : table.get(0)) {
+                    row1Aux.add(new Minion((Minion)card));
+                }
+                for (Card card : table.get(1)) {
+                    row2Aux.add(new Minion((Minion)card));
+                }
+                for (Card card : table.get(2)) {
+                    row3Aux.add(new Minion((Minion)card));
+                }
+                for (Card card : table.get(3)) {
+                    row4Aux.add(new Minion((Minion)card));
+                }
+
+                ArrayList<ArrayList<Card>> table1 = new ArrayList<>();
+                table1.add(row1Aux);
+                table1.add(row2Aux);
+                table1.add(row3Aux);
+                table1.add(row4Aux);
+
+                output.addObject().put("command", command.getCommand()).putPOJO("output", table1);
                 break;
             case "getCardAtPosition":
                 if (command.getX() < table.size() && command.getY() < table.get(command.getX()).size()) {
@@ -102,7 +152,8 @@ public class Interpret {
                             .put("x", command.getX())
                             .put("y", command.getY())
                             .putPOJO("output", card);
-                } else {
+                }
+                else {
                     output.addObject().put("command", command.getCommand())
                             .put("x", command.getX())
                             .put("y", command.getY())
@@ -111,7 +162,11 @@ public class Interpret {
                 break;
             case "getEnvironmentCardsInHand":
                 ArrayList<Card> environments = new ArrayList<>();
+                ArrayList<Card> environmentsInHand = new ArrayList<>();
                 for (Card card : actingPlayer.getEnvironmentInHand()) {
+                    environmentsInHand.add((Environment) card);
+                }
+                for (Card card : environmentsInHand) {
                     environments.add((Environment) card);
                 }
                 output.addObject().put("command", command.getCommand())
@@ -132,10 +187,10 @@ public class Interpret {
                 break;
             case "getTotalGamesPlayed":
                 output.addObject().put("command", command.getCommand())
-                        .put("output", inputData.getGames().size());
+                        .put("output", actingPlayer.getWin()+otherPlayer.getWin());
                 break;
-            case "getPlayerTwoWins":
-                if (actingPlayer.getIdx() == 2) {
+            case "getPlayerOneWins":
+                if (actingPlayer.getIdx() == 1) {
                     output.addObject().put("command", command.getCommand())
                             .put("output", actingPlayer.getWin());
                 } else {
@@ -143,8 +198,8 @@ public class Interpret {
                             .put("output", otherPlayer.getWin());
                 }
                 break;
-            case "getPlayerOneWins":
-                if (actingPlayer.getIdx() == 1) {
+            case "getPlayerTwoWins":
+                if (actingPlayer.getIdx() == 2) {
                     output.addObject().put("command", command.getCommand())
                             .put("output", actingPlayer.getWin());
                 } else {
@@ -372,11 +427,12 @@ public class Interpret {
                     break;
                 case "cardUsesAbility": {
                     Card attacker = new Card();
-                    attacker = table.get(command.getCardAttacker().getX()).get(command.getCardAttacker().getY());
                     Card attacked = new Card();
                     if (command.getCardAttacked().getX() < table.size() &&
-                            command.getCardAttacked().getY() < table.get(command.getCardAttacked().getX()).size()) {
-
+                            command.getCardAttacked().getY() < table.get(command.getCardAttacked().getX()).size() &&
+                            command.getCardAttacker().getX() < table.size() &&
+                            command.getCardAttacker().getY() < table.get(command.getCardAttacker().getX()).size()) {
+                        attacker = table.get(command.getCardAttacker().getX()).get(command.getCardAttacker().getY());
                         attacked = table.get(command.getCardAttacked().getX()).get(command.getCardAttacked().getY());
                         if (!(((Minion) attacker).isFrozen())) {
                             if (!(((Minion) attacker).isFrozenForRound())) {
@@ -461,13 +517,13 @@ public class Interpret {
                                     otherPlayer.getHero().setHealth(otherPlayer.getHero().getHealth() - ((Minion) attacker).getAttackDamage());
                                     ((Minion) attacker).setFrozen(true);
                                     if (otherPlayer.getHero().getHealth() <= 0) {
-                                        if (otherPlayer.getIdx() == 1) {
+                                        if (otherPlayer.getIdx() == 1){
                                             output.addObject().put("gameEnded", "Player two killed the enemy hero.");
-                                            actingPlayer.setWin(actingPlayer.getWin()+1);
                                         } else {
                                             output.addObject().put("gameEnded", "Player one killed the enemy hero.");
-                                            actingPlayer.setWin(actingPlayer.getWin()+1);
                                         }
+                                        actingPlayer.setWin((actingPlayer.getWin()+1));
+                                        System.out.println("Player " + actingPlayer.getIdx() + " nr win " + actingPlayer.getWin());
                                     }
                                 } else {
                                     output.addObject().put("command", command.getCommand())
