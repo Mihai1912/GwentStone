@@ -5,14 +5,22 @@ import main.Player;
 
 import java.util.ArrayList;
 
-public class Environment extends Card {
+final public class Environment extends Card {
     private int mana;
 
+    /**
+     *
+     * @return Extract card mana
+     */
     public int getMana() {
         return mana;
     }
 
-    public void setMana(int mana) {
+    /**
+     *
+     * @param mana Desired mana for setting the mana of the current card
+     */
+    public void setMana(final int mana) {
         this.mana = mana;
     }
 
@@ -20,19 +28,27 @@ public class Environment extends Card {
     public Environment() {
     }
 
-    public Environment(int mana, String description, ArrayList<String> colors, String name) {
+    public Environment(final int mana, final String description,
+                       final ArrayList<String> colors, final String name) {
         setColors(colors);
         setDescription(description);
         setName(name);
         setMana(mana);
     }
 
-    public Environment(Environment environment) {
+    public Environment(final Environment environment) {
         super(environment);
         this.mana = environment.getMana();
     }
 
-    public void action(Player actingPlayer, Player otherPlayer, ActionsInput command) {
+    /**
+     *
+     * @param actingPlayer Player whose turn it is now
+     * @param otherPlayer  Player on whom the action is taken
+     * @param command      Acting player command
+     */
+    public void action(final Player actingPlayer, final Player otherPlayer,
+                       final ActionsInput command) {
         switch (getName()) {
             case "Winterfell" -> {
                 if (command.getAffectedRow() == 2 || command.getAffectedRow() == 1) {
@@ -101,16 +117,30 @@ public class Environment extends Card {
                     otherPlayer.getBackRow().remove(cardToSteal);
                 }
             }
+            default -> { }
         }
     }
 
+    /**
+     *
+     * @return This returning a string, we can get a representation of an object as a string
+     */
     @Override
     public String toString() {
-        return "Environment{" +
-                "mana=" + getMana() +
-                "name=" + getName() +
-                "description=" + getDescription() +
-                "colors=" + getColors() +
+        return "Environment{"
+                +
+                "mana="
+                + getMana()
+                +
+                "name="
+                + getName()
+                +
+                "description="
+                + getDescription()
+                +
+                "colors="
+                + getColors()
+                +
                 '}';
     }
 }

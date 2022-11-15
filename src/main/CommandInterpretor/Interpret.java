@@ -2,7 +2,6 @@ package main.CommandInterpretor;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.ActionsInput;
-import fileio.Input;
 import main.Actions.EndRound;
 import main.Actions.NewRound;
 import main.Actions.PlaceCard;
@@ -15,12 +14,20 @@ import main.RemoveDeadCard;
 
 import java.util.ArrayList;
 
-public class Interpret {
+final public class Interpret {
 
-    ActionsInput cmd;
+    final static int ZERO = 0;
+    final static int ONE = 1;
+    final static int TWO = 2;
+    final static int THREE = 3;
+    final static int FOUR = 4;
+    final static int FIVE = 5;
 
-    public static int player1Win  = 0;
-    public static int player2Win  = 0;
+
+    private ActionsInput cmd;
+
+    private static int player1Win = ZERO;
+    private static int player2Win = ZERO;
 
     public static int getPlayer1Win() {
         return player1Win;
@@ -30,44 +37,17 @@ public class Interpret {
         return player2Win;
     }
 
-    public static void setPlayer1Win(int player1Win) {
+    public static void setPlayer1Win(final int player1Win) {
         Interpret.player1Win = player1Win;
     }
 
-    public static void setPlayer2Win(int player2Win) {
+    public static void setPlayer2Win(final int player2Win) {
         Interpret.player2Win = player2Win;
     }
 
-    public void interpretation(ActionsInput command, ArrayNode output, Player actingPlayer, Player otherPlayer,
-                               ArrayList<ArrayList<Card>> table , Input inputData) {
-
-//        System.out.println("acting " + actingPlayer.getIdx() + " outher " + otherPlayer.getIdx());
-
-//        ArrayList<Card> row1Aux = new ArrayList<>();
-//        ArrayList<Card> row2Aux = new ArrayList<>();
-//        ArrayList<Card> row3Aux = new ArrayList<>();
-//        ArrayList<Card> row4Aux = new ArrayList<>();
-//
-//        for (Card card : table.get(0)) {
-//            row1Aux.add(new Minion((Minion)card));
-//        }
-//        for (Card card : table.get(1)) {
-//            row2Aux.add(new Minion((Minion)card));
-//        }
-//        for (Card card : table.get(2)) {
-//            row3Aux.add(new Minion((Minion)card));
-//        }
-//        for (Card card : table.get(3)) {
-//            row4Aux.add(new Minion((Minion)card));
-//        }
-//
-//        ArrayList<ArrayList<Card>> table1 = new ArrayList<>();
-//        table1.add(row1Aux);
-//        table1.add(row2Aux);
-//        table1.add(row3Aux);
-//        table1.add(row4Aux);
-
-
+    public void interpretation(final ActionsInput command, final ArrayNode output,
+                               final Player actingPlayer, final Player otherPlayer,
+                               final ArrayList<ArrayList<Card>> table) {
         switch (command.getCommand()) {
             case "getPlayerDeck":
                 if (actingPlayer.getIdx() == command.getPlayerIdx()) {
@@ -94,44 +74,54 @@ public class Interpret {
                 }
                 break;
             case "getPlayerTurn":
-                output.addObject().put("command", command.getCommand()).put("output", actingPlayer.getIdx());
+                output.addObject().put("command", command.getCommand())
+                        .put("output", actingPlayer.getIdx());
                 break;
             case "getCardsInHand":
                 ArrayList<Card> hand = new ArrayList<>();
                 if (actingPlayer.getIdx() == command.getPlayerIdx()) {
                     for (Card card : actingPlayer.getInHandCard()) {
                         String name = card.getName();
-                        if (name.equals("Sentinel") || name.equals("Berserker") || name.equals("Goliath")
-                                || name.equals("Warden") || name.equals("The Ripper") || name.equals("Miraj")
+                        if (name.equals("Sentinel") || name.equals("Berserker")
+                                || name.equals("Goliath")
+                                || name.equals("Warden") || name.equals("The Ripper")
+                                || name.equals("Miraj")
                                 || name.equals("The Cursed One") || name.equals("Disciple")) {
                             hand.add(new Minion((Minion) card));
                         } else {
                             hand.add(new Environment((Environment) card));
                         }
                     }
-                    output.addObject().put("command", command.getCommand()).put("playerIdx", actingPlayer.getIdx())
+                    output.addObject().put("command", command.getCommand())
+                            .put("playerIdx", actingPlayer.getIdx())
                             .putPOJO("output", hand);
                 } else {
                     for (Card card : otherPlayer.getInHandCard()) {
                         String name = card.getName();
-                        if (name.equals("Sentinel") || name.equals("Berserker") || name.equals("Goliath")
-                                || name.equals("Warden") || name.equals("The Ripper") || name.equals("Miraj")
-                                || name.equals("The Cursed One") || name.equals("Disciple")) {
+                        if (name.equals("Sentinel") || name.equals("Berserker")
+                                || name.equals("Goliath")
+                                || name.equals("Warden") || name.equals("The Ripper")
+                                || name.equals("Miraj")
+                                || name.equals("The Cursed One")
+                                || name.equals("Disciple")) {
                             hand.add(new Minion((Minion) card));
                         } else {
                             hand.add(new Environment((Environment) card));
                         }
                     }
-                    output.addObject().put("command", command.getCommand()).put("playerIdx", otherPlayer.getIdx())
+                    output.addObject().put("command", command.getCommand())
+                            .put("playerIdx", otherPlayer.getIdx())
                             .putPOJO("output", hand);
                 }
                 break;
             case "getPlayerMana":
                 if (actingPlayer.getIdx() == command.getPlayerIdx()) {
-                    output.addObject().put("command", command.getCommand()).put("playerIdx", actingPlayer.getIdx())
+                    output.addObject().put("command", command.getCommand())
+                            .put("playerIdx", actingPlayer.getIdx())
                             .putPOJO("output", actingPlayer.getMana());
                 } else {
-                    output.addObject().put("command", command.getCommand()).put("playerIdx", otherPlayer.getIdx())
+                    output.addObject().put("command", command.getCommand())
+                            .put("playerIdx", otherPlayer.getIdx())
                             .putPOJO("output", otherPlayer.getMana());
                 }
                 break;
@@ -142,17 +132,17 @@ public class Interpret {
                 ArrayList<Card> row3Aux = new ArrayList<>();
                 ArrayList<Card> row4Aux = new ArrayList<>();
 
-                for (Card card : table.get(0)) {
-                    row1Aux.add(new Minion((Minion)card));
+                for (Card card : table.get(ZERO)) {
+                    row1Aux.add(new Minion((Minion) card));
                 }
-                for (Card card : table.get(1)) {
-                    row2Aux.add(new Minion((Minion)card));
+                for (Card card : table.get(ONE)) {
+                    row2Aux.add(new Minion((Minion) card));
                 }
-                for (Card card : table.get(2)) {
-                    row3Aux.add(new Minion((Minion)card));
+                for (Card card : table.get(TWO)) {
+                    row3Aux.add(new Minion((Minion) card));
                 }
-                for (Card card : table.get(3)) {
-                    row4Aux.add(new Minion((Minion)card));
+                for (Card card : table.get(THREE)) {
+                    row4Aux.add(new Minion((Minion) card));
                 }
 
                 ArrayList<ArrayList<Card>> table1 = new ArrayList<>();
@@ -161,18 +151,19 @@ public class Interpret {
                 table1.add(row3Aux);
                 table1.add(row4Aux);
 
-                output.addObject().put("command", command.getCommand()).putPOJO("output", table1);
+                output.addObject().put("command", command.getCommand())
+                        .putPOJO("output", table1);
                 break;
             case "getCardAtPosition":
-                if (command.getX() < table.size() && command.getY() < table.get(command.getX()).size()) {
+                if (command.getX() < table.size() && command.getY()
+                        < table.get(command.getX()).size()) {
                     Card aux = table.get(command.getX()).get(command.getY());
                     Minion card = new Minion((Minion) aux);
                     output.addObject().put("command", command.getCommand())
                             .put("x", command.getX())
                             .put("y", command.getY())
                             .putPOJO("output", card);
-                }
-                else {
+                } else {
                     output.addObject().put("command", command.getCommand())
                             .put("x", command.getX())
                             .put("y", command.getY())
@@ -206,7 +197,7 @@ public class Interpret {
                 break;
             case "getTotalGamesPlayed":
                 output.addObject().put("command", command.getCommand())
-                        .put("output", player1Win+player2Win);
+                        .put("output", player1Win + player2Win);
                 break;
             case "getPlayerOneWins":
                 if (actingPlayer.getIdx() == 1) {
@@ -226,19 +217,18 @@ public class Interpret {
                             .put("output", player2Win);
                 }
                 break;
+            default:
         }
 
-        if ((actingPlayer.getNoTurns() == 1 && otherPlayer.getNoTurns() == 1) ||
-                (actingPlayer.getNoTurns() == 1 && otherPlayer.getNoTurns() == 0) ||
-                (actingPlayer.getNoTurns() == 0 && otherPlayer.getNoTurns() == 1)) {
+        if ((actingPlayer.getNoTurns() == 1 && otherPlayer.getNoTurns() == 1)
+                || (actingPlayer.getNoTurns() == 1 && otherPlayer.getNoTurns() == ZERO)
+                || (actingPlayer.getNoTurns() == ZERO && otherPlayer.getNoTurns() == 1)) {
 
             switch (command.getCommand()) {
                 case "endPlayerTurn":
                     actingPlayer.endTurn(otherPlayer);
-//                System.out.println("-endPlayerTurn- "+ actingPlayer.getIdx() + ": " +actingPlayer.getNoTurns()+ " "+ otherPlayer.getIdx() + ": " + otherPlayer.getNoTurns());
-//                System.out.println();
-                    if (actingPlayer.getNoTurns() == 0 && otherPlayer.getNoTurns() == 0) {
-//                    System.out.println("===endRound===");
+                    if (actingPlayer.getNoTurns() == ZERO
+                            && otherPlayer.getNoTurns() == ZERO) {
                         EndRound endRound = new EndRound(actingPlayer, otherPlayer);
                         NewRound newRound = new NewRound(actingPlayer, otherPlayer);
                     }
@@ -246,188 +236,204 @@ public class Interpret {
                 case "placeCard":
 //                System.out.println(actingPlayer.getIdx()+"-placeCard-");
                     String name = actingPlayer.getInHandCard().get(command.getHandIdx()).getName();
-                    if (name.equals("Firestorm") || name.equals("Winterfell") || name.equals("Heart Hound")) {
+                    if (name.equals("Firestorm") || name.equals("Winterfell")
+                            || name.equals("Heart Hound")) {
+                        String err = "Cannot place environment card on table.";
                         output.addObject().put("command", command.getCommand())
                                 .put("handIdx", command.getHandIdx())
-                                .put("error", "Cannot place environment card on table.");
+                                .put("error", err);
                     } else {
                         Card card = new Card();
                         card = actingPlayer.getInHandCard().get(command.getHandIdx());
 //                    System.out.println(card.getName());
                         if (actingPlayer.enoughManaToPlaceCard(card)) {
-                            if (card.getName().equals("The Ripper") ||
-                                    card.getName().equals("Miraj") ||
-                                    card.getName().equals("Goliath") ||
-                                    card.getName().equals("Warden")) {
-                                if (actingPlayer.getFrontRow().size() < 5) {
-                                    PlaceCard placeCard = new PlaceCard(actingPlayer, command.getHandIdx(), table, otherPlayer);
+                            if (card.getName().equals("The Ripper")
+                                    || card.getName().equals("Miraj")
+                                    || card.getName().equals("Goliath")
+                                    || card.getName().equals("Warden")) {
+                                if (actingPlayer.getFrontRow().size() < FIVE) {
+                                    PlaceCard placeCard = new PlaceCard(actingPlayer,
+                                            command.getHandIdx(), table, otherPlayer);
                                 } else {
-                                    output.addObject().put("command", command.getCommand())
+                                    String err = "Cannot place card on table since row is full.";
+                                    output.addObject().put("command",
+                                                    command.getCommand())
                                             .put("handIdx", command.getHandIdx())
-                                            .put("error", "Cannot place card on table since row is full.");
+                                            .put("error", err);
                                 }
                             } else {
-                                if (actingPlayer.getBackRow().size() < 5) {
-                                    PlaceCard placeCard = new PlaceCard(actingPlayer, command.getHandIdx(), table, otherPlayer);
+                                if (actingPlayer.getBackRow().size() < FIVE) {
+                                    PlaceCard placeCard = new PlaceCard(actingPlayer,
+                                            command.getHandIdx(), table, otherPlayer);
                                 } else {
-                                    output.addObject().put("command", command.getCommand())
+                                    String err = "Cannot place card on table since row is full.";
+                                    output.addObject().put("command",
+                                                    command.getCommand())
                                             .put("handIdx", command.getHandIdx())
-                                            .put("error", "Cannot place card on table since row is full.");
+                                            .put("error", err);
                                 }
                             }
                         } else {
+                            String err = "Not enough mana to place card on table.";
                             output.addObject().put("command", command.getCommand())
                                     .put("handIdx", command.getHandIdx())
-                                    .put("error", "Not enough mana to place card on table.");
+                                    .put("error", err);
                         }
                     }
                     break;
                 case "cardUsesAttack":
-//                System.out.println("==================================");
-                    if (command.getCardAttacker().getX() != command.getCardAttacked().getX()) {
-                        if (command.getCardAttacker().getX() <= 3 && command.getCardAttacker().getY() <= 4) {
-                            Card cardAttacker = new Card();
-                            if (command.getCardAttacker().getX() < table.size() &&
-                                    command.getCardAttacker().getY() < table.get(command.getCardAttacker().getX()).size()) {
-
-                                cardAttacker = table.get(command.getCardAttacker().getX()).get(command.getCardAttacker().getY());
-                                if (!(((Minion) cardAttacker).isFrozen())) {
-                                    if (!(((Minion) cardAttacker).isFrozenForRound())) {
-                                        Card cardAttacked = new Card();
-                                        if (command.getCardAttacked().getX() < table.size() &&
-                                                command.getCardAttacked().getY() < table.get(command.getCardAttacked().getX()).size()) {
-
-                                            cardAttacked = table.get(command.getCardAttacked().getX()).get(command.getCardAttacked().getY());
-                                            if (((Minion) cardAttacked).isTank()) {
-//                                    System.out.println("------------------------------------");
-                                                ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth() - ((Minion) cardAttacker).getAttackDamage());
-//                                    System.out.println(table);
-//                                    if (((Minion) cardAttacked).getHealth() <= 0) {
-//                                        table.get(command.getCardAttacked().getX()).remove(command.getCardAttacked().getY());
-//                                    }
-                                                ((Minion) cardAttacker).setFrozen(true);
-                                            } else {
-//                                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                                                int x = command.getCardAttacked().getX();
-                                                boolean value1 = false;
-                                                switch (x) {
-                                                    case 0:
-                                                    case 1:
-                                                        value1 = actingPlayer.ifAttackTank(table.get(0), table.get(1));
-                                                        break;
-                                                    case 2:
-                                                    case 3:
-                                                        value1 = actingPlayer.ifAttackTank(table.get(2), table.get(3));
-                                                        break;
-                                                }
-                                                if (!value1) {
-//                                        System.out.println("attacker " + cardAttacker.getName() + ((Minion) cardAttacker).getAttackDamage());
-//                                        System.out.println("attacked " + cardAttacked.getName() + ((Minion) cardAttacked).getAttackDamage());
-                                                    ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth() - ((Minion) cardAttacker).getAttackDamage());
-//                                        System.out.println(table);
-//                                        if (((Minion) cardAttacked).getHealth() <= 0) {
-//                                            table.get(command.getCardAttacked().getX()).remove(command.getCardAttacked().getY());
-//                                        }
-                                                    ((Minion) cardAttacker).setFrozen(true);
-                                                } else {
-                                                    output.addObject().put("command", command.getCommand())
-                                                            .putPOJO("cardAttacker", command.getCardAttacker())
-                                                            .putPOJO("cardAttacked", command.getCardAttacked())
-                                                            .put("error", "Attacked card is not of type 'Tank'.");
-                                                }
-                                            }
-                                        }
-                                    } else if (((Minion) cardAttacker).isFrozenForRound()) {
-                                        output.addObject().put("command", command.getCommand())
-                                                .putPOJO("cardAttacker", command.getCardAttacker())
-                                                .putPOJO("cardAttacked", command.getCardAttacked())
-                                                .put("error", "Attacker card is frozen.");
-                                    }
-                                } else {
-                                    output.addObject().put("command", command.getCommand())
-                                            .putPOJO("cardAttacker", command.getCardAttacker())
-                                            .putPOJO("cardAttacked", command.getCardAttacked())
-                                            .put("error", "Attacker card has already attacked this turn.");
-                                }
-                            }
-                        }
-                    } else {
+                    Card cardAttacker = new Card();
+                    Card cardAttacked = new Card();
+                    if (command.getCardAttacker().getX() == command.getCardAttacked().getX()) {
                         output.addObject().put("command", command.getCommand())
                                 .putPOJO("cardAttacker", command.getCardAttacker())
                                 .putPOJO("cardAttacked", command.getCardAttacked())
                                 .put("error", "Attacked card does not belong to the enemy.");
+                        break;
                     }
-//                RemoveDeadCard removeDeadCard = new RemoveDeadCard(table);
+                    if (command.getCardAttacker().getX() <= THREE
+                            && command.getCardAttacker().getY() <= FOUR) {
+                        if (command.getCardAttacker().getX() < table.size()
+                                && command.getCardAttacker().getY()
+                                < table.get(command.getCardAttacker().getX()).size()) {
+                            cardAttacker = table.get(command.getCardAttacker().getX())
+                                    .get(command.getCardAttacker().getY());
+                        }
+                    }
+                    if (((Minion) cardAttacker).isFrozen()) {
+                        output.addObject().put("command", command.getCommand())
+                                .putPOJO("cardAttacker", command.getCardAttacker())
+                                .putPOJO("cardAttacked", command.getCardAttacked())
+                                .put("error", "Attacker card has already attacked this turn.");
+                        break;
+                    }
+                    if (((Minion) cardAttacker).isFrozenForRound()) {
+                        output.addObject().put("command", command.getCommand())
+                                .putPOJO("cardAttacker", command.getCardAttacker())
+                                .putPOJO("cardAttacked", command.getCardAttacked())
+                                .put("error", "Attacker card is frozen.");
+                        break;
+                    }
+                    if (command.getCardAttacked().getX() < table.size()
+                            && command.getCardAttacked().getY()
+                            < table.get(command.getCardAttacked().getX()).size()) {
+                        cardAttacked = table.get(command.getCardAttacked().getX())
+                                .get(command.getCardAttacked().getY());
+                    }
+                    if (((Minion) cardAttacked).isTank()) {
+                        ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth()
+                                - ((Minion) cardAttacker).getAttackDamage());
+                        ((Minion) cardAttacker).setFrozen(true);
+                    } else {
+                        int x = command.getCardAttacked().getX();
+                        boolean value1 = false;
+                        switch (x) {
+                            case ZERO:
+                            case ONE:
+                                value1 = actingPlayer.ifAttackTank(table.get(ZERO),
+                                        table.get(ONE));
+                                break;
+                            case TWO:
+                            case THREE:
+                                value1 = actingPlayer.ifAttackTank(table.get(TWO),
+                                        table.get(THREE));
+                                break;
+                            default:
+                                break;
+                        }
+                        if (!value1) {
+                            ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth()
+                                    - ((Minion) cardAttacker).getAttackDamage());
+                            ((Minion) cardAttacker).setFrozen(true);
+                        } else {
+                            output.addObject().put("command", command.getCommand())
+                            .putPOJO("cardAttacker", command.getCardAttacker())
+                            .putPOJO("cardAttacked", command.getCardAttacked())
+                            .put("error", "Attacked card is not of type 'Tank'.");
+                        }
+                    }
                     break;
                 case "useEnvironmentCard":
                     Card card = new Card();
                     card = actingPlayer.getInHandCard().get(command.getHandIdx());
-                    if (card.getName().equals("Winterfell") ||
-                            card.getName().equals("Firestorm") ||
-                            card.getName().equals("Heart Hound")) {
+                    String errRowFull = "Cannot steal enemy card since the player's row is full.";
+                    if (card.getName().equals("Winterfell")
+                            || card.getName().equals("Firestorm")
+                            || card.getName().equals("Heart Hound")) {
                         if (command.getHandIdx() < actingPlayer.getInHandCard().size()) {
                             if (actingPlayer.getMana() >= card.getMana()) {
                                 if (actingPlayer.getIdx() == 1) {
-                                    if (command.getAffectedRow() == 0 || command.getAffectedRow() == 1) {
+                                    if (command.getAffectedRow() == 0
+                                            || command.getAffectedRow() == 1) {
                                         if (card.getName().equals("Heart Hound")) {
                                             if (command.getAffectedRow() == 0) {
-                                                if (actingPlayer.getBackRow().size() <= 4) {
-                                                    ((Environment) card).action(actingPlayer, otherPlayer, command);
+                                                if (actingPlayer.getBackRow().size() <= FOUR) {
+                                                    card.action(actingPlayer, otherPlayer, command);
                                                 } else {
-                                                    output.addObject().put("command", command.getCommand())
-                                                            .put("handIdx", command.getHandIdx())
-                                                            .put("affectedRow", command.getAffectedRow())
-                                                            .put("error", "Cannot steal enemy card since the player's row is full.");
+                                                    output.addObject().put("command",
+                                                                    command.getCommand())
+                                                    .put("handIdx", command.getHandIdx())
+                                                    .put("affectedRow", command.getAffectedRow())
+                                                    .put("error", errRowFull);
                                                 }
                                             } else if (command.getAffectedRow() == 1) {
-                                                if (actingPlayer.getFrontRow().size() <= 4) {
-                                                    ((Environment) card).action(actingPlayer, otherPlayer, command);
+                                                if (actingPlayer.getFrontRow().size() <= FOUR) {
+                                                    card.action(actingPlayer, otherPlayer, command);
                                                 } else {
-                                                    output.addObject().put("command", command.getCommand())
-                                                            .put("handIdx", command.getHandIdx())
-                                                            .put("affectedRow", command.getAffectedRow())
-                                                            .put("error", "Cannot steal enemy card since the player's row is full.");
+                                                    output.addObject().put("command",
+                                                                    command.getCommand())
+                                                    .put("handIdx", command.getHandIdx())
+                                                    .put("affectedRow", command.getAffectedRow())
+                                                    .put("error", errRowFull);
                                                 }
                                             }
                                         } else {
-                                            ((Environment) card).action(actingPlayer, otherPlayer, command);
+                                            card.action(actingPlayer, otherPlayer, command);
                                         }
                                     } else {
-                                        output.addObject().put("command", command.getCommand())
+                                        String err = "Chosen row does not belong to the enemy.";
+                                        output.addObject().put("command",
+                                                        command.getCommand())
                                                 .put("handIdx", command.getHandIdx())
                                                 .put("affectedRow", command.getAffectedRow())
-                                                .put("error", "Chosen row does not belong to the enemy.");
+                                                .put("error", err);
                                     }
                                 } else {
-                                    if (command.getAffectedRow() == 2 || command.getAffectedRow() == 3) {
+                                    if (command.getAffectedRow() == 2
+                                            || command.getAffectedRow() == THREE) {
                                         if (card.getName().equals("Heart Hound")) {
-                                            if (command.getAffectedRow() == 3) {
-                                                if (actingPlayer.getBackRow().size() <= 4) {
-                                                    ((Environment) card).action(actingPlayer, otherPlayer, command);
+                                            if (command.getAffectedRow() == THREE) {
+                                                if (actingPlayer.getBackRow().size() <= FOUR) {
+                                                    card.action(actingPlayer, otherPlayer, command);
                                                 } else {
-                                                    output.addObject().put("command", command.getCommand())
+                                                    output.addObject().put("command",
+                                                                    command.getCommand())
                                                             .put("handIdx", command.getHandIdx())
-                                                            .put("affectedRow", command.getAffectedRow())
-                                                            .put("error", "Cannot steal enemy card since the player's row is full.");
+                                                            .put("affectedRow",
+                                                                    command.getAffectedRow())
+                                                            .put("error", errRowFull);
                                                 }
                                             } else if (command.getAffectedRow() == 2) {
-                                                if (actingPlayer.getFrontRow().size() <= 4) {
-                                                    ((Environment) card).action(actingPlayer, otherPlayer, command);
+                                                if (actingPlayer.getFrontRow().size() <= FOUR) {
+                                                    card.action(actingPlayer, otherPlayer, command);
                                                 } else {
-                                                    output.addObject().put("command", command.getCommand())
+                                                    output.addObject().put("command",
+                                                                    command.getCommand())
                                                             .put("handIdx", command.getHandIdx())
-                                                            .put("affectedRow", command.getAffectedRow())
-                                                            .put("error", "Cannot steal enemy card since the player's row is full.");
+                                                            .put("affectedRow",
+                                                                    command.getAffectedRow())
+                                                            .put("error", errRowFull);
                                                 }
                                             }
                                         } else {
-                                            ((Environment) card).action(actingPlayer, otherPlayer, command);
+                                            card.action(actingPlayer, otherPlayer, command);
                                         }
                                     } else {
+                                        String err = "Chosen row does not belong to the enemy.";
                                         output.addObject().put("command", command.getCommand())
                                                 .put("handIdx", command.getHandIdx())
                                                 .put("affectedRow", command.getAffectedRow())
-                                                .put("error", "Chosen row does not belong to the enemy.");
+                                                .put("error", err);
                                     }
                                 }
                             } else {
@@ -447,28 +453,33 @@ public class Interpret {
                 case "cardUsesAbility": {
                     Card attacker = new Card();
                     Card attacked = new Card();
-                    if (command.getCardAttacked().getX() < table.size() &&
-                            command.getCardAttacked().getY() < table.get(command.getCardAttacked().getX()).size() &&
-                            command.getCardAttacker().getX() < table.size() &&
-                            command.getCardAttacker().getY() < table.get(command.getCardAttacker().getX()).size()) {
-                        attacker = table.get(command.getCardAttacker().getX()).get(command.getCardAttacker().getY());
-                        attacked = table.get(command.getCardAttacked().getX()).get(command.getCardAttacked().getY());
+                    if (command.getCardAttacked().getX() < table.size()
+                            && command.getCardAttacked().getY()
+                            < table.get(command.getCardAttacked().getX()).size()
+                            && command.getCardAttacker().getX() < table.size()
+                            && command.getCardAttacker().getY()
+                            < table.get(command.getCardAttacker().getX()).size()) {
+                        attacker = table.get(command.getCardAttacker().getX())
+                                .get(command.getCardAttacker().getY());
+                        attacked = table.get(command.getCardAttacked().getX())
+                                .get(command.getCardAttacked().getY());
                         if (!(((Minion) attacker).isFrozen())) {
+                            String errBel = "Attacked card does not belong to the current player.";
                             if (!(((Minion) attacker).isFrozenForRound())) {
                                 if (((Minion) attacker).getName().equals("Disciple")) {
-                                    if (actingPlayer.getFrontRow().contains(attacked) ||
-                                            actingPlayer.getBackRow().contains(attacked)) {
+                                    if (actingPlayer.getFrontRow().contains(attacked)
+                                            || actingPlayer.getBackRow().contains(attacked)) {
                                         attacker.action(actingPlayer, otherPlayer, command);
                                         ((Minion) attacker).setFrozen(true);
                                     } else {
                                         output.addObject().put("command", command.getCommand())
                                                 .putPOJO("cardAttacker", command.getCardAttacker())
                                                 .putPOJO("cardAttacked", command.getCardAttacked())
-                                                .put("error", "Attacked card does not belong to the current player.");
+                                                .put("error", errBel);
                                     }
                                 } else {
-                                    if (otherPlayer.getFrontRow().contains(attacked) ||
-                                            otherPlayer.getBackRow().contains(attacked)) {
+                                    if (otherPlayer.getFrontRow().contains(attacked)
+                                            || otherPlayer.getBackRow().contains(attacked)) {
                                         if (((Minion) attacked).isTank()) {
                                             attacker.action(actingPlayer, otherPlayer, command);
                                             ((Minion) attacker).setFrozen(true);
@@ -476,30 +487,41 @@ public class Interpret {
                                             int x = command.getCardAttacked().getX();
                                             boolean value1 = false;
                                             switch (x) {
-                                                case 0:
-                                                case 1:
-                                                    value1 = actingPlayer.ifAttackTank(table.get(0), table.get(1));
+                                                case ZERO:
+                                                case ONE:
+                                                    value1 = actingPlayer
+                                                            .ifAttackTank(table.get(ZERO),
+                                                            table.get(ONE));
                                                     break;
-                                                case 2:
-                                                case 3:
-                                                    value1 = actingPlayer.ifAttackTank(table.get(2), table.get(3));
+                                                case TWO:
+                                                case THREE:
+                                                    value1 = actingPlayer
+                                                            .ifAttackTank(table.get(TWO),
+                                                            table.get(THREE));
+                                                    break;
+                                                default:
                                                     break;
                                             }
                                             if (!value1) {
                                                 attacker.action(actingPlayer, otherPlayer, command);
                                                 ((Minion) attacker).setFrozen(true);
                                             } else {
-                                                output.addObject().put("command", command.getCommand())
-                                                        .putPOJO("cardAttacker", command.getCardAttacker())
-                                                        .putPOJO("cardAttacked", command.getCardAttacked())
-                                                        .put("error", "Attacked card is not of type 'Tank'.");
+                                                output.addObject().put("command",
+                                                                command.getCommand())
+                                                        .putPOJO("cardAttacker",
+                                                                command.getCardAttacker())
+                                                        .putPOJO("cardAttacked",
+                                                                command.getCardAttacked())
+                                                        .put("error",
+                                                        "Attacked card is not of type 'Tank'.");
                                             }
                                         }
                                     } else {
+                                        String err = "Attacked card does not belong to the enemy.";
                                         output.addObject().put("command", command.getCommand())
                                                 .putPOJO("cardAttacker", command.getCardAttacker())
                                                 .putPOJO("cardAttacked", command.getCardAttacked())
-                                                .put("error", "Attacked card does not belong to the enemy.");
+                                                .put("error", err);
                                     }
                                 }
                             } else {
@@ -518,36 +540,38 @@ public class Interpret {
                     break;
                 }
                 case "useAttackHero": {
-//                System.out.println(command.getCardAttacker().getX() + " " + command.getCardAttacker().getY());
                     Card attacker = new Card();
-                    if (command.getCardAttacker().getX() < table.size() &&
-                            command.getCardAttacker().getY() < table.get(command.getCardAttacker().getX()).size()) {
+                    if (command.getCardAttacker().getX() < table.size()
+                            && command.getCardAttacker().getY()
+                            < table.get(command.getCardAttacker().getX()).size()) {
 
-                        attacker = table.get(command.getCardAttacker().getX()).get(command.getCardAttacker().getY());
+                        attacker = table.get(command.getCardAttacker().getX())
+                                .get(command.getCardAttacker().getY());
                         if (!(((Minion) attacker).isFrozen())) {
                             if (!(((Minion) attacker).isFrozenForRound())) {
                                 boolean value1 = false;
-                                if (actingPlayer.getIdx() == 1) {
-                                    value1 = actingPlayer.ifAttackTank(table.get(0), table.get(1));
+                                if (actingPlayer.getIdx() == ONE) {
+                                    value1 = actingPlayer
+                                            .ifAttackTank(table.get(ONE), table.get(ZERO));
                                 } else {
-                                    value1 = actingPlayer.ifAttackTank(table.get(2), table.get(3));
+                                    value1 = actingPlayer
+                                            .ifAttackTank(table.get(TWO), table.get(THREE));
                                 }
                                 if (!value1) {
-                                    otherPlayer.getHero().setHealth(otherPlayer.getHero().getHealth() - ((Minion) attacker).getAttackDamage());
+                                    otherPlayer.getHero()
+                                            .setHealth(otherPlayer.getHero().getHealth()
+                                                    - ((Minion) attacker).getAttackDamage());
                                     ((Minion) attacker).setFrozen(true);
                                     if (otherPlayer.getHero().getHealth() <= 0) {
-                                        if (otherPlayer.getIdx() == 1){
-                                            output.addObject().put("gameEnded", "Player two killed the enemy hero.");
+                                        if (otherPlayer.getIdx() == 1) {
+                                            output.addObject().put("gameEnded",
+                                                    "Player two killed the enemy hero.");
                                             player2Win++;
-                                            System.out.println("Player two killed the enemy hero.");
                                         } else {
-                                            output.addObject().put("gameEnded", "Player one killed the enemy hero.");
+                                            output.addObject().put("gameEnded",
+                                                    "Player one killed the enemy hero.");
                                             player1Win++;
-                                            System.out.println("Player one killed the enemy hero.");
                                         }
-//                                        actingPlayer.setWin((actingPlayer.getWin()+1));
-                                        System.out.println( "win player 2 = "  + player2Win);
-                                        System.out.println( "win player 1 = "  + player1Win);
                                     }
                                 } else {
                                     output.addObject().put("command", command.getCommand())
@@ -570,50 +594,66 @@ public class Interpret {
                 case "useHeroAbility":
                     if (actingPlayer.getMana() >= actingPlayer.getHero().getMana()) {
                         if (!(actingPlayer.getHero().isFrozen())) {
-                            if (actingPlayer.getHero().getName().equals("Lord Royce") ||
-                                    actingPlayer.getHero().getName().equals("Empress Thorina")) {
+                            if (actingPlayer.getHero().getName().equals("Lord Royce")
+                                    || actingPlayer.getHero().getName().equals("Empress Thorina")) {
                                 if (actingPlayer.getIdx() == 1) {
-                                    if (command.getAffectedRow() == 1 || command.getAffectedRow() == 0) {
-                                        actingPlayer.getHero().action(actingPlayer, otherPlayer, command);
+                                    if (command.getAffectedRow() == 1
+                                            || command.getAffectedRow() == 0) {
+                                        actingPlayer.getHero()
+                                                .action(actingPlayer, otherPlayer, command);
                                         actingPlayer.getHero().setFrozen(true);
-                                        actingPlayer.setMana(actingPlayer.getMana() - actingPlayer.getHero().getMana());
+                                        actingPlayer.setMana(actingPlayer.getMana()
+                                                - actingPlayer.getHero().getMana());
                                     } else {
                                         output.addObject().put("command", command.getCommand())
                                                 .put("affectedRow", command.getAffectedRow())
-                                                .put("error", "Selected row does not belong to the enemy.");
+                                                .put("error",
+                                                "Selected row does not belong to the enemy.");
                                     }
                                 } else {
-                                    if (command.getAffectedRow() == 3 || command.getAffectedRow() == 2) {
-                                        actingPlayer.getHero().action(actingPlayer, otherPlayer, command);
+                                    if (command.getAffectedRow() == THREE
+                                            || command.getAffectedRow() == TWO) {
+                                        actingPlayer.getHero().action(actingPlayer,
+                                                otherPlayer, command);
                                         actingPlayer.getHero().setFrozen(true);
-                                        actingPlayer.setMana(actingPlayer.getMana() - actingPlayer.getHero().getMana());
+                                        actingPlayer.setMana(actingPlayer.getMana()
+                                                - actingPlayer.getHero().getMana());
                                     } else {
                                         output.addObject().put("command", command.getCommand())
                                                 .put("affectedRow", command.getAffectedRow())
-                                                .put("error", "Selected row does not belong to the enemy.");
+                                                .put("error",
+                                                "Selected row does not belong to the enemy.");
                                     }
                                 }
-                            } else if (actingPlayer.getHero().getName().equals("King Mudface") ||
-                                    actingPlayer.getHero().getName().equals("General Kocioraw")) {
+                            } else if (actingPlayer.getHero().getName().equals("King Mudface")
+                                    || actingPlayer.getHero().getName()
+                                        .equals("General Kocioraw")) {
                                 if (actingPlayer.getIdx() == 1) {
-                                    if (command.getAffectedRow() == 3 || command.getAffectedRow() == 2) {
-                                        actingPlayer.getHero().action(actingPlayer, otherPlayer, command);
+                                    if (command.getAffectedRow() == THREE
+                                            || command.getAffectedRow() == 2) {
+                                        actingPlayer.getHero()
+                                                .action(actingPlayer, otherPlayer, command);
                                         actingPlayer.getHero().setFrozen(true);
-                                        actingPlayer.setMana(actingPlayer.getMana() - actingPlayer.getHero().getMana());
+                                        actingPlayer.setMana(actingPlayer.getMana()
+                                                - actingPlayer.getHero().getMana());
                                     } else {
                                         output.addObject().put("command", command.getCommand())
                                                 .put("affectedRow", command.getAffectedRow())
                                                 .put("error", "Selected row does not belong to the current player.");
                                     }
                                 } else {
-                                    if (command.getAffectedRow() == 1 || command.getAffectedRow() == 0) {
-                                        actingPlayer.getHero().action(actingPlayer, otherPlayer, command);
+                                    if (command.getAffectedRow() == 1
+                                            || command.getAffectedRow() == 0) {
+                                        actingPlayer.getHero().
+                                                action(actingPlayer, otherPlayer, command);
                                         actingPlayer.getHero().setFrozen(true);
-                                        actingPlayer.setMana(actingPlayer.getMana() - actingPlayer.getHero().getMana());
+                                        actingPlayer.setMana(actingPlayer.getMana()
+                                                - actingPlayer.getHero().getMana());
                                     } else {
                                         output.addObject().put("command", command.getCommand())
-                                                .put("affectedRow", command.getAffectedRow())
-                                                .put("error", "Selected row does not belong to the current player.");
+                                        .put("affectedRow", command.getAffectedRow())
+                                        .put("error",
+                                        "Selected row does not belong to the current player.");
                                     }
                                 }
                             }
@@ -641,3 +681,5 @@ public class Interpret {
         this.cmd = cmd;
     }
 }
+
+

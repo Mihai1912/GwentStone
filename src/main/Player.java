@@ -6,7 +6,7 @@ import main.Cards.Minion;
 
 import java.util.ArrayList;
 
-public class Player {
+final public class Player {
     private int idx;
     private boolean turn;
     private int noTurns = 1;
@@ -20,7 +20,7 @@ public class Player {
     private ArrayList<Card> frontRow = new ArrayList<>();
     private ArrayList<Card> backRow = new ArrayList<>();
 
-    private int win = 0 ;
+    private int win = 0;
 
     private ArrayList<Card> environmentInHand = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class Player {
         return environmentInHand;
     }
 
-    public void setEnvironmentInHand(ArrayList<Card> environmentInHand) {
+    public void setEnvironmentInHand(final ArrayList<Card> environmentInHand) {
         this.environmentInHand = environmentInHand;
     }
 
@@ -36,19 +36,19 @@ public class Player {
         return win;
     }
 
-    public void setWin(int win) {
+    public void setWin(final int win) {
         this.win = win;
     }
 
-    public void setInHandCard(ArrayList<Card> inHandCard) {
+    public void setInHandCard(final ArrayList<Card> inHandCard) {
         this.inHandCard = inHandCard;
     }
 
-    public void setDeck(ArrayList<Card> deck) {
+    public void setDeck(final ArrayList<Card> deck) {
         this.deck = deck;
     }
 
-    public void setHero(Card hero) {
+    public void setHero(final Card hero) {
         this.hero = (Hero) hero;
     }
 
@@ -72,11 +72,11 @@ public class Player {
         return mana;
     }
 
-    public void setIdx(int idx) {
+    public void setIdx(final int idx) {
         this.idx = idx;
     }
 
-    public void setMana(int mana) {
+    public void setMana(final int mana) {
         this.mana = mana;
     }
 
@@ -84,7 +84,7 @@ public class Player {
         return noTurns;
     }
 
-    public void setNoTurns(int noTurns) {
+    public void setNoTurns(final int noTurns) {
         this.noTurns = noTurns;
     }
 
@@ -100,7 +100,7 @@ public class Player {
         return backRow;
     }
 
-    public void setTurn(boolean turn) {
+    public void setTurn(final boolean turn) {
         this.turn = turn;
     }
 
@@ -108,11 +108,14 @@ public class Player {
         return noRound;
     }
 
-    public void setNoRound(int noRound) {
+    public void setNoRound(final int noRound) {
         this.noRound = noRound;
     }
 
 
+    /**
+     * Draw Card from deck and put in hand and in other ArrayList where is only environments
+     */
     public void drawCard() {
         inHandCard.add(deck.get(0));
         if (deck.get(0).getName().equals("Winterfell") || deck.get(0).getName().equals("Firestorm")
@@ -122,25 +125,48 @@ public class Player {
         deck.remove(0);
     }
 
-    public void endTurn(Player player) {
+    /**
+     *
+     * @param player Player who finished his turn
+     */
+    public void endTurn(final Player player) {
         setTurn(false);
         player.setTurn(true);
         setNoTurns(0);
     }
 
-    public boolean enoughManaToPlaceCard(Card card) {
+    /**
+     *
+     * @param card Card for which it is checked that the player has enough hand
+     * @return Truth value
+     */
+    public boolean enoughManaToPlaceCard(final Card card) {
         return getMana() >= card.getMana();
     }
 
-    public void addInFrontRow(Card card) {
+    /**
+     *
+     * @param card Card that is added to the row in front of the current player
+     */
+    public void addInFrontRow(final Card card) {
         frontRow.add(card);
     }
 
-    public void addInBackRow(Card card) {
+    /**
+     *
+     * @param card Card that is added to the back row of the current player
+     */
+    public void addInBackRow(final Card card) {
         backRow.add(card);
     }
 
-    public boolean ifAttackTank(ArrayList<Card> row1, ArrayList<Card> row2) {
+    /**
+     *
+     * @param row1 player's first row
+     * @param row2 player's second row
+     * @return The true value if there is a tank card on the player's rows
+     */
+    public boolean ifAttackTank(final ArrayList<Card> row1, final ArrayList<Card> row2) {
         for (Card card : row1) {
             if (((Minion) card).isTank()) {
                 return true;

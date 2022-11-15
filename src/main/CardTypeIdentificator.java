@@ -6,13 +6,19 @@ import main.Cards.Environment;
 import main.Cards.Hero;
 import main.Cards.Minion;
 
-import java.util.ArrayList;
+final public class CardTypeIdentificator {
 
-public class CardTypeIdentificator {
+    private Card card;
 
-    Card card;
+    public Card getCard() {
+        return card;
+    }
 
-    public CardTypeIdentificator(CardInput cardInput) {
+    public void setCard(final Card card) {
+        this.card = card;
+    }
+
+    public CardTypeIdentificator(final CardInput cardInput) {
         String name = cardInput.getName();
         if (name.equals("Sentinel") || name.equals("Berserker") || name.equals("Goliath")
                 || name.equals("Warden") || name.equals("The Ripper") || name.equals("Miraj")

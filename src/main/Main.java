@@ -77,15 +77,11 @@ public final class Main {
 
         ArrayNode output = objectMapper.createArrayNode();
 
-        //TODO add here the entry point to your implementation
         int noGame = inputData.getGames().size();
-//        Player Player1 = new Player();
-//        Player Player2 = new Player();
         for (int game = 0; game < noGame; game++) {
-            System.out.println("=================================");
-            Player Player1 = new Player();
-            Player Player2 = new Player();
-            initDecks Decks = new initDecks(inputData, game);
+            Player player1 = new Player();
+            Player player2 = new Player();
+            InitDecks decks = new InitDecks(inputData, game);
             ArrayList<ArrayList<Card>> table = new ArrayList<>();
 
             for (int i = 0; i < 4; i++) {
@@ -93,28 +89,30 @@ public final class Main {
             }
 
 
-            Player1.setIdx(1);
-            Player2.setIdx(2);
+            player1.setIdx(1);
+            player2.setIdx(2);
             if (inputData.getGames().get(game).getStartGame().getStartingPlayer() == 1) {
-                Player1.setTurn(true);
-                Player2.setTurn(false);
+                player1.setTurn(true);
+                player2.setTurn(false);
             } else {
-                Player1.setTurn(false);
-                Player2.setTurn(true);
+                player1.setTurn(false);
+                player2.setTurn(true);
             }
-            CardInput heroPlayer1 = inputData.getGames().get(game).getStartGame().getPlayerOneHero();
-            CardInput heroPlayer2 = inputData.getGames().get(game).getStartGame().getPlayerTwoHero();
-            Player1.setDeck(Decks.deckPlayer1);
-            Player2.setDeck(Decks.deckPlayer2);
+            CardInput heroPlayer1 = inputData.getGames().get(game).getStartGame()
+                    .getPlayerOneHero();
+            CardInput heroPlayer2 = inputData.getGames().get(game).getStartGame()
+                    .getPlayerTwoHero();
+            player1.setDeck(decks.getDeckPlayer1());
+            player2.setDeck(decks.getDeckPlayer2());
             CardTypeIdentificator hero1 = new CardTypeIdentificator(heroPlayer1);
             CardTypeIdentificator hero2 = new CardTypeIdentificator(heroPlayer2);
-            Player1.setHero(hero1.card);
-            Player2.setHero(hero2.card);
+            player1.setHero(hero1.getCard());
+            player2.setHero(hero2.getCard());
 
-            if (Player1.isTurn()) {
-                NewRound newRound = new NewRound(Player1, Player2);
+            if (player1.isTurn()) {
+                NewRound newRound = new NewRound(player1, player2);
             } else {
-                NewRound newRound = new NewRound(Player2, Player1);
+                NewRound newRound = new NewRound(player2, player1);
             }
 
             ActionsInput commnd;
@@ -126,13 +124,10 @@ public final class Main {
             for (ActionsInput action : actions) {
                 commnd = action;
                 cmdint.setCmd(commnd);
-                if (commnd.getPlayerIdx() == 1 ||
-                        (Player1.isTurn())) {
-                    cmdint.interpretation(commnd, output, Player1, Player2, table, inputData);
-//                System.out.println("caz1");
-                } else if (Player2.isTurn()) {
-                    cmdint.interpretation(commnd, output, Player2, Player1, table, inputData);
-//                System.out.println("caz2");
+                if (commnd.getPlayerIdx() == 1 || (player1.isTurn())) {
+                    cmdint.interpretation(commnd, output, player1, player2, table);
+                } else if (player2.isTurn()) {
+                    cmdint.interpretation(commnd, output, player2, player1, table);
                 }
             }
         }

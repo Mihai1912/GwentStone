@@ -9,10 +9,9 @@ public class NewRound {
     public NewRound() {
     }
 
-    public NewRound(Player actingPlayer, Player otherPlayer) {
+    public NewRound(final Player actingPlayer, final Player otherPlayer) {
         actingPlayer.setNoRound((actingPlayer.getNoRound() + 1));
         otherPlayer.setNoRound((otherPlayer.getNoRound() + 1));
-//        System.out.println("nr Runde " + actingPlayer.getNoRound());
         if (actingPlayer.getDeck().size() > 0) {
             actingPlayer.drawCard();
         }

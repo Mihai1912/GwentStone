@@ -31,4 +31,9 @@ public final class CheckerConstants {
     public static final int FIVE_POINTS = 5;
     public static final int ZERO_POINTS = 0;
     public static final int LEN_LONGEST_TEST_NAME = 40;
+
+    // my constants
+
+
+
 }

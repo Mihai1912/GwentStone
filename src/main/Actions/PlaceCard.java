@@ -1,27 +1,27 @@
 package main.Actions;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import main.Cards.Card;
 import main.Player;
 
 import java.util.ArrayList;
 
-public class PlaceCard {
+final public class PlaceCard {
     public PlaceCard() {
     }
 
-    public PlaceCard(Player actingPlayer, int cardIdx, ArrayList<ArrayList<Card>> table, Player otherplayer) {
+    public PlaceCard(final Player actingPlayer, final int cardIdx,
+                     final ArrayList<ArrayList<Card>> table, final Player otherplayer) {
         int minMana;
         minMana = actingPlayer.getInHandCard().get(cardIdx).getMana();
 
-        Card cardToPlace = new Card();
+        Card cardToPlace;
         cardToPlace = actingPlayer.getInHandCard().get(cardIdx);
 
 
-        if (cardToPlace.getName().equals("The Ripper") ||
-                cardToPlace.getName().equals("Miraj") ||
-                cardToPlace.getName().equals("Goliath") ||
-                cardToPlace.getName().equals("Warden")) {
+        if (cardToPlace.getName().equals("The Ripper")
+                || cardToPlace.getName().equals("Miraj")
+                || cardToPlace.getName().equals("Goliath")
+                || cardToPlace.getName().equals("Warden")) {
             actingPlayer.addInFrontRow(cardToPlace);
         } else {
             actingPlayer.addInBackRow(cardToPlace);

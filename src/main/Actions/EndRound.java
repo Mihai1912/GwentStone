@@ -7,7 +7,7 @@ public class EndRound {
     public EndRound() {
     }
 
-    public EndRound(Player actingPlayer, Player otherPlayer) {
+    public EndRound(final Player actingPlayer, final Player otherPlayer) {
         actingPlayer.setNoTurns(1);
         otherPlayer.setNoTurns(1);
         if (actingPlayer.isTurn()) {

@@ -6,7 +6,7 @@ import main.Player;
 
 import java.util.ArrayList;
 
-public class Minion extends Card {
+final public class Minion extends Card {
     private int attackDamage;
     private int health;
     private int mana;
@@ -35,15 +35,15 @@ public class Minion extends Card {
         return mana;
     }
 
-    public void setAttackDamage(int attackDamage) {
+    public void setAttackDamage(final int attackDamage) {
         this.attackDamage = attackDamage;
     }
 
-    public void setHealt(int healt) {
+    public void setHealt(final int healt) {
         this.health = healt;
     }
 
-    public void setMana(int mana) {
+    public void setMana(final int mana) {
         this.mana = mana;
     }
 
@@ -51,7 +51,7 @@ public class Minion extends Card {
         return tank;
     }
 
-    public void setTank(boolean tank) {
+    public void setTank(final boolean tank) {
         this.tank = tank;
     }
 
@@ -60,7 +60,7 @@ public class Minion extends Card {
         return frozen;
     }
 
-    public void setFrozen(boolean frozen) {
+    public void setFrozen(final boolean frozen) {
         this.frozen = frozen;
     }
 
@@ -72,19 +72,19 @@ public class Minion extends Card {
         return unfrozenRound;
     }
 
-    public void setFrozenForRound(boolean frozenForRound) {
+    public void setFrozenForRound(final boolean frozenForRound) {
         this.frozenForRound = frozenForRound;
     }
 
-    public void setUnfrozenRound(int unfrozenRound) {
+    public void setUnfrozenRound(final int unfrozenRound) {
         this.unfrozenRound = unfrozenRound;
     }
 
     public Minion() {
     }
 
-    public Minion(int mana, String description, ArrayList<String> colors,
-                  String name, int healt, int attackDamage) {
+    public Minion(final int mana, final String description, final ArrayList<String> colors,
+                  final String name, final int healt, final int attackDamage) {
         setColors(colors);
         setDescription(description);
         setName(name);
@@ -93,14 +93,15 @@ public class Minion extends Card {
         setAttackDamage(attackDamage);
     }
 
-    public Minion(Minion minion) {
+    public Minion(final Minion minion) {
         super(minion);
         this.mana = minion.getMana();
         this.health = minion.getHealth();
         this.attackDamage = minion.getAttackDamage();
     }
 
-    public void action(Player actingPlayer, Player otherPlayer, ActionsInput command) {
+    public void action(final Player actingPlayer, final Player otherPlayer,
+                       final ActionsInput command) {
         Card cardAttacked = new Card();
         Card cardAttacker = new Card();
         int aux = 0;
@@ -122,14 +123,16 @@ public class Minion extends Card {
                 if (((Minion) cardAttacked).getAttackDamage() < 2) {
                     ((Minion) cardAttacked).setAttackDamage(0);
                 } else {
-                    ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked).getAttackDamage() - 2);
+                    ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked)
+                            .getAttackDamage() - 2);
                 }
             } else {
                 cardAttacked = otherPlayer.getBackRow().get(yAttacked);
                 if (((Minion) cardAttacked).getAttackDamage() < 2) {
                     ((Minion) cardAttacked).setAttackDamage(0);
                 } else {
-                    ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked).getAttackDamage() - 2);
+                    ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked)
+                            .getAttackDamage() - 2);
                 }
             }
         } else if (getName().equals("Miraj")) {
@@ -169,13 +172,26 @@ public class Minion extends Card {
 
     @Override
     public String toString() {
-        return "Minion{" +
-                "attackDamage=" + getAttackDamage() +
-                ", health=" + getHealth() +
-                ", mana=" + getMana() +
-                ", name=" + getName() +
-                ", colors=" + getColors() +
-                ", description=" + getDescription() +
+        return "Minion{"
+                +
+                "attackDamage="
+                + getAttackDamage()
+                +
+                ", health="
+                + getHealth()
+                +
+                ", mana="
+                + getMana()
+                +
+                ", name="
+                + getName()
+                +
+                ", colors="
+                + getColors()
+                +
+                ", description="
+                + getDescription()
+                +
                 '}';
     }
 }
