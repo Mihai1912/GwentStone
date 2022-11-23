@@ -234,7 +234,6 @@ final public class Interpret {
                     }
                     break;
                 case "placeCard":
-//                System.out.println(actingPlayer.getIdx()+"-placeCard-");
                     String name = actingPlayer.getInHandCard().get(command.getHandIdx()).getName();
                     if (name.equals("Firestorm") || name.equals("Winterfell")
                             || name.equals("Heart Hound")) {
@@ -245,7 +244,6 @@ final public class Interpret {
                     } else {
                         Card card = new Card();
                         card = actingPlayer.getInHandCard().get(command.getHandIdx());
-//                    System.out.println(card.getName());
                         if (actingPlayer.enoughManaToPlaceCard(card)) {
                             if (card.getName().equals("The Ripper")
                                     || card.getName().equals("Miraj")

@@ -14,13 +14,10 @@ final public class Player {
     private Hero hero;
     private ArrayList<Card> deck = new ArrayList<>();
     private int mana = 0;
-
     private int noRound = 0;
 
     private ArrayList<Card> frontRow = new ArrayList<>();
     private ArrayList<Card> backRow = new ArrayList<>();
-
-    private int win = 0;
 
     private ArrayList<Card> environmentInHand = new ArrayList<>();
 
@@ -30,14 +27,6 @@ final public class Player {
 
     public void setEnvironmentInHand(final ArrayList<Card> environmentInHand) {
         this.environmentInHand = environmentInHand;
-    }
-
-    public int getWin() {
-        return win;
-    }
-
-    public void setWin(final int win) {
-        this.win = win;
     }
 
     public void setInHandCard(final ArrayList<Card> inHandCard) {

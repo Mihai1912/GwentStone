@@ -58,6 +58,5 @@ final public class CardTypeIdentificator {
                     cardInput.getName());
             card = hero;
         }
-//        System.out.println(card);
     }
 }

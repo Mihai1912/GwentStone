@@ -105,68 +105,78 @@ final public class Minion extends Card {
         Card cardAttacked = new Card();
         Card cardAttacker = new Card();
         int aux = 0;
-        if (getName().equals("Disciple")) {
-            int xAttacked = command.getCardAttacked().getX();
-            int yAttacked = command.getCardAttacked().getY();
-            if (xAttacked == 1 || xAttacked == 2) {
-                cardAttacked = actingPlayer.getFrontRow().get(yAttacked);
-                ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth() + 2);
-            } else {
-                cardAttacked = actingPlayer.getBackRow().get(yAttacked);
-                ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth() + 2);
-            }
-        } else if (getName().equals("The Ripper")) {
-            int xAttacked = command.getCardAttacked().getX();
-            int yAttacked = command.getCardAttacked().getY();
-            if (xAttacked == 1 || xAttacked == 2) {
-                cardAttacked = otherPlayer.getFrontRow().get(yAttacked);
-                if (((Minion) cardAttacked).getAttackDamage() < 2) {
-                    ((Minion) cardAttacked).setAttackDamage(0);
+        switch (getName()) {
+            case "Disciple" -> {
+                int xAttacked = command.getCardAttacked().getX();
+                int yAttacked = command.getCardAttacked().getY();
+                if (xAttacked == 1 || xAttacked == 2) {
+                    cardAttacked = actingPlayer.getFrontRow().get(yAttacked);
+                    ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth() + 2);
                 } else {
-                    ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked)
-                            .getAttackDamage() - 2);
+                    cardAttacked = actingPlayer.getBackRow().get(yAttacked);
+                    ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getHealth() + 2);
                 }
-            } else {
-                cardAttacked = otherPlayer.getBackRow().get(yAttacked);
-                if (((Minion) cardAttacked).getAttackDamage() < 2) {
-                    ((Minion) cardAttacked).setAttackDamage(0);
+                break;
+            }
+            case "The Ripper" -> {
+                int xAttacked = command.getCardAttacked().getX();
+                int yAttacked = command.getCardAttacked().getY();
+                if (xAttacked == 1 || xAttacked == 2) {
+                    cardAttacked = otherPlayer.getFrontRow().get(yAttacked);
+                    if (((Minion) cardAttacked).getAttackDamage() < 2) {
+                        ((Minion) cardAttacked).setAttackDamage(0);
+                    } else {
+                        ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked)
+                                .getAttackDamage() - 2);
+                    }
                 } else {
-                    ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked)
-                            .getAttackDamage() - 2);
+                    cardAttacked = otherPlayer.getBackRow().get(yAttacked);
+                    if (((Minion) cardAttacked).getAttackDamage() < 2) {
+                        ((Minion) cardAttacked).setAttackDamage(0);
+                    } else {
+                        ((Minion) cardAttacked).setAttackDamage(((Minion) cardAttacked)
+                                .getAttackDamage() - 2);
+                    }
                 }
+                break;
             }
-        } else if (getName().equals("Miraj")) {
-            int xAttacker = command.getCardAttacker().getX();
-            int yAttacker = command.getCardAttacker().getY();
-            int xAttacked = command.getCardAttacked().getX();
-            int yAttacked = command.getCardAttacked().getY();
-            if (xAttacked == 1 || xAttacked == 2) {
-                cardAttacked = otherPlayer.getFrontRow().get(yAttacked);
-            } else {
-                cardAttacked = otherPlayer.getBackRow().get(yAttacked);
+            case "Miraj" -> {
+                int xAttacker = command.getCardAttacker().getX();
+                int yAttacker = command.getCardAttacker().getY();
+                int xAttacked = command.getCardAttacked().getX();
+                int yAttacked = command.getCardAttacked().getY();
+                if (xAttacked == 1 || xAttacked == 2) {
+                    cardAttacked = otherPlayer.getFrontRow().get(yAttacked);
+                } else {
+                    cardAttacked = otherPlayer.getBackRow().get(yAttacked);
+                }
+                if (xAttacker == 1 || xAttacker == 2) {
+                    cardAttacker = actingPlayer.getFrontRow().get(yAttacker);
+                } else {
+                    cardAttacker = actingPlayer.getBackRow().get(yAttacker);
+                }
+                aux = ((Minion) cardAttacker).getHealth();
+                ((Minion) cardAttacker).setHealt(((Minion) cardAttacked).getHealth());
+                ((Minion) cardAttacked).setHealt(aux);
+                break;
             }
-            if (xAttacker == 1 || xAttacker == 2) {
-                cardAttacker = actingPlayer.getFrontRow().get(yAttacker);
-            } else {
-                cardAttacker = actingPlayer.getBackRow().get(yAttacker);
+            case "The Cursed One" -> {
+                int xAttacked = command.getCardAttacked().getX();
+                int yAttacked = command.getCardAttacked().getY();
+                if (xAttacked == 1 || xAttacked == 2) {
+                    cardAttacked = otherPlayer.getFrontRow().get(yAttacked);
+                    aux = ((Minion) cardAttacked).getHealth();
+                    ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getAttackDamage());
+                    ((Minion) cardAttacked).setAttackDamage(aux);
+                } else {
+                    cardAttacked = otherPlayer.getBackRow().get(yAttacked);
+                    aux = ((Minion) cardAttacked).getHealth();
+                    ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getAttackDamage());
+                    ((Minion) cardAttacked).setAttackDamage(aux);
+                }
+                break;
             }
-            aux = ((Minion) cardAttacker).getHealth();
-            ((Minion) cardAttacker).setHealt(((Minion) cardAttacked).getHealth());
-            ((Minion) cardAttacked).setHealt(aux);
-        } else if (getName().equals("The Cursed One")) {
-            int xAttacked = command.getCardAttacked().getX();
-            int yAttacked = command.getCardAttacked().getY();
-            if (xAttacked == 1 || xAttacked == 2) {
-                cardAttacked = otherPlayer.getFrontRow().get(yAttacked);
-                aux = ((Minion) cardAttacked).getHealth();
-                ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getAttackDamage());
-                ((Minion) cardAttacked).setAttackDamage(aux);
-            } else {
-                cardAttacked = otherPlayer.getBackRow().get(yAttacked);
-                aux = ((Minion) cardAttacked).getHealth();
-                ((Minion) cardAttacked).setHealt(((Minion) cardAttacked).getAttackDamage());
-                ((Minion) cardAttacked).setAttackDamage(aux);
-            }
+            default -> { }
         }
     }
 

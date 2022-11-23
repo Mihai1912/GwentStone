@@ -63,7 +63,6 @@ final public class Environment extends Card {
                     }
                 } else {
                     for (Card card : otherPlayer.getBackRow()) {
-//                    ((Minion)card).setFrozen(true);
                         if (otherPlayer.getNoTurns() == 1) {
                             card.setFrozenForRound(true);
                             card.setUnfrozenRound(actingPlayer.getNoRound() + 1);
